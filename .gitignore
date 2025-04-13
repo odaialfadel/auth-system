@@ -1,54 +1,18 @@
+# ----------------------------
+# Java / Spring / Gradle
+# ----------------------------
+
 # Gradle files
-.gradle
+.gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-# STS (Spring Tool Suite) specific files
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-# IntelliJ IDEA specific files
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-
-# NetBeans specific files
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-# VS Code specific files
-.vscode/
-
 # Compiled class files
 *.class
 
-# Log files
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME) temporary files
-.mtj.tmp/
-
-# Package Files
+# Package files
 *.jar
 *.war
 *.nar
@@ -57,22 +21,91 @@ out/
 *.tar.gz
 *.rar
 
-# Virtual machine crash logs (Java)
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
 
-# Ignore IntelliJ-specific files
+# Log files
+*.log
+
+# ----------------------------
+# IntelliJ IDEA / STS
+# ----------------------------
+
+# IntelliJ-specific
 .idea/
-
-# Ignore Gradle cache and temporary files
-.gradle/
-
-# Ignore local environment settings
-/shelf/
-/workspace.xml
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+shelf/
+workspace.xml
 /httpRequests/
-/dataSources/
-/dataSources.local.xml
+dataSources/
+dataSources.local.xml
 
-# Others
-HELP.md
+# STS (Spring Tool Suite)
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ----------------------------
+# Angular / Node.js
+# ----------------------------
+
+# Compiled output
+/dist/
+/tmp/
+/out-tsc/
+/bazel-out/
+
+# Node
+/node_modules/
+npm-debug.log
+yarn-error.log
+
+# Angular cache
+/.angular/cache/
+.sass-cache/
+
+# Test logs
+/connect.lock
+/coverage/
+libpeerconnection.log
+testem.log
+
+# Misc
+/typings/
+.history/
+
+# ----------------------------
+# Editor-specific
+# ----------------------------
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Eclipse / VS / Sublime / C9
+.c9/
+*.launch
+*.sublime-workspace
