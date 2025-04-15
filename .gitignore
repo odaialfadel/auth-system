@@ -68,7 +68,7 @@ bin/
 # ----------------------------
 # Angular / Node.js
 # ----------------------------
-
+.angular
 # Compiled output
 /tmp/
 /out-tsc/
