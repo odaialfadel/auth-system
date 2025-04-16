@@ -1,38 +1,41 @@
 import { Component } from '@angular/core';
-import {MatAnchor, MatButton} from '@angular/material/button';
-import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
-import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {FormsModule, ReactiveFormsModule, FormControl, FormGroup} from '@angular/forms';
-import {MatCheckbox} from '@angular/material/checkbox';
+import {MatButton} from '@angular/material/button';
+import {FormsModule, ReactiveFormsModule, FormGroup, FormBuilder} from '@angular/forms';
 import {RouterLink} from '@angular/router';
+import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
+import {MatIcon} from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-login',
   imports: [
     MatButton,
-    FaIconComponent,
     FormsModule,
-    MatCheckbox,
     ReactiveFormsModule,
     RouterLink,
-    MatAnchor,
+    MatFormField,
+    MatLabel,
+    MatFormField,
+    MatInput,
+    MatFormField,
+    MatIcon,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
-  protected readonly faEnvelope = faEnvelope;
-  protected password: string = '';
-  protected rememberMe: boolean = false;
+  loginForm: FormGroup;
 
-  form = new FormGroup({
-    rememberMe: new FormControl(false)
-  });
-
-  get rememberMeControl(): FormControl {
-    return this.form.get('rememberMe') as FormControl;
+  constructor(private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      email: [''],
+      password: [''],
+    });
   }
 
+  onSubmit() {
+    const formData = this.loginForm.value;
+    console.log('Form data:', formData);
+  }
 }

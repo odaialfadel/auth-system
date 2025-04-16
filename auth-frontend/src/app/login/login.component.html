@@ -15,40 +15,24 @@
       <div class="divider-line"></div>
     </div>
     <div class="login-right">
-      <div class="login-form">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" id="email" placeholder="name@mail.com">
-          <fa-icon [icon]="faEnvelope" class="icon"></fa-icon>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <div class="input-wrapper">
-            <input
-              type="password"
-              id="password"
-              placeholder="••••••••••••"
-              [(ngModel)]="password"
-            />
-            <svg class="lock-icon" viewBox="0 0 48 48" width="30" height="30">
-              <rect x="0" y="15" width="24" height="20" rx="4" fill="#0078B9"/>
-              <path
-                [attr.d]="password.length > 0 ? 'M6 22V8a6 6 0 0 1 12 0v0' : 'M6 22V8a6 6 0 0 1 12 0v8'"
-                stroke="#0078B9"
-                fill="none"
-                stroke-width="4"
-                class="shackle"
-              />
-            </svg>
-          </div>
-        </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <!-- Email Field -->
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" />
+        </mat-form-field>
+
+        <!-- Password Field -->
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" />
+        </mat-form-field>
+
         <div class="remember-forgot">
-          <div class="checkbox-wrapper">
-            <mat-checkbox class="checkbox-container" [formControl]="rememberMeControl">Remember me</mat-checkbox>
-          </div>
-          <a mat-button class="forgot-link" [routerLink]="'/forgot-password'">Forgot password?</a>
+          <button mat-button class="forgot-link" [routerLink]="'/forgot-password'">Forgot password?</button>
         </div>
-      </div>
+      </form>
 
       <!-- Moved section out of .login-form -->
       <section>

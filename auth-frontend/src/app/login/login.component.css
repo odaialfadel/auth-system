@@ -116,38 +116,9 @@
   margin-top: clamp(1vh, 2vh, 3vh);
 }
 
-.login-form {
+.custom-field {
   width: 100%;
-}
-
-.form-group label {
-  display: block;
-  font-size: clamp(0.8rem, 2vw, 1rem);
-  color: #666;
-  margin-bottom: 0.5vw;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 1vh 1vw;
-  border: 1px solid #E0E0E0;
-  border-radius: 1vw;
-  font-size: clamp(0.8rem, 2vw, 1rem);
-  color: #333;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.icon, .lock-icon {
-  position: relative;
-  left: 88%;
-  bottom: 30px;
-  color: #0078B9;
-  pointer-events: none;
-}
-
-.shackle {
-  transition: d 1.5s ease;
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
 }
 
 .remember-forgot {
@@ -178,7 +149,7 @@ section  {
 }
 
 section p {
-  font-size: clamp(0.8rem, 1vw, 0.95rem);
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
   font-weight: bold;
   color: #6c88d1;
   margin-bottom: 5%;
@@ -203,14 +174,12 @@ section p {
 }
 
 .signup-btn {
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  color: white;
+  background: linear-gradient(200deg, #1b37ed, #26d0ce);
+  color: white !important;
   box-shadow: 0 0.5vw 1.5vw rgba(0, 114, 255, 0.3);
 }
 
-.login-btn:hover,
 .signup-btn:hover {
-  background: linear-gradient(to right, #00c6ff, #0072ff);
   color: white !important;
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
