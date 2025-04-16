@@ -1,20 +1,63 @@
-<header>
-  <h2 class="logo">Logo</h2>
-  <nav class="navigation">
-    <a routerLink="/">Home</a>
-    <a routerLink="/about">About</a>
-    <a routerLink="/services">Services</a>
-    <a routerLink="/contact">Contact</a>
-    <button class="btnLogin-popup">Login</button>
-  </nav>
-</header>
-<div class="login-bg">
+<div class="login-container">
   <div class="login-card">
-    <h2>Login</h2>
-    <form>
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
+    <div class="login-left">
+      <div class="logo-container">
+        <div class="logo-circle"></div>
+        <div class="logo-text">YOUR<br><span>LOGO</span></div>
+      </div>
+      <div class="welcome-text">
+        <h1>Hello,<br>welcome!</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nisi risus.</p>
+        <button class="view-more-btn">View more</button>
+      </div>
+    </div>
+    <div class="login-middle">
+      <div class="divider-line"></div>
+    </div>
+    <div class="login-right">
+      <div class="login-form">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="name@mail.com">
+          <fa-icon [icon]="faEnvelope" class="icon"></fa-icon>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="password"
+              placeholder="••••••••••••"
+              [(ngModel)]="password"
+            />
+            <svg class="lock-icon" viewBox="0 0 48 48" width="30" height="30">
+              <!-- Lock body (constant) -->
+              <rect x="0" y="15" width="24" height="20" rx="4" fill="#0078B9"/>
+
+              <!-- Lock shackle (animated) -->
+              <path
+                [attr.d]="password.length > 0 ? 'M6 22V8a6 6 0 0 1 12 0v0' : 'M6 22V8a6 6 0 0 1 12 0v8'"
+                stroke="#0078B9"
+                fill="none"
+                stroke-width="4"
+                class="shackle"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="remember-forgot">
+          <div class="checkbox-container">
+            <input type="checkbox" id="remember">
+            <label for="remember">Remember me</label>
+          </div>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+        <section>
+          <button mat-button class="login-btn">Login</button>
+          <p>Not a member yet?</p>
+          <button mat-button class="signup-btn">Sign up</button>
+        </section>
+      </div>
+    </div>
   </div>
 </div>

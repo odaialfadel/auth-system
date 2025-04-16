@@ -1,3 +1,4 @@
-.login-bg {
-  background: url("assets/images/background.png") no-repeat center center;
-}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
