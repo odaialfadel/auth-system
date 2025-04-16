@@ -31,10 +31,7 @@
               [(ngModel)]="password"
             />
             <svg class="lock-icon" viewBox="0 0 48 48" width="30" height="30">
-              <!-- Lock body (constant) -->
               <rect x="0" y="15" width="24" height="20" rx="4" fill="#0078B9"/>
-
-              <!-- Lock shackle (animated) -->
               <path
                 [attr.d]="password.length > 0 ? 'M6 22V8a6 6 0 0 1 12 0v0' : 'M6 22V8a6 6 0 0 1 12 0v8'"
                 stroke="#0078B9"
@@ -46,18 +43,19 @@
           </div>
         </div>
         <div class="remember-forgot">
-          <div class="checkbox-container">
-            <input type="checkbox" id="remember">
-            <label for="remember">Remember me</label>
+          <div class="checkbox-wrapper">
+            <mat-checkbox class="checkbox-container" [formControl]="rememberMeControl">Remember me</mat-checkbox>
           </div>
-          <a href="#" class="forgot-link">Forgot password?</a>
+          <a mat-button class="forgot-link" [routerLink]="'/forgot-password'">Forgot password?</a>
         </div>
-        <section>
-          <button mat-button class="login-btn">Login</button>
-          <p>Not a member yet?</p>
-          <button mat-button class="signup-btn">Sign up</button>
-        </section>
       </div>
+
+      <!-- Moved section out of .login-form -->
+      <section>
+        <button mat-button class="login-btn">Login</button>
+        <p>Not a member yet?</p>
+        <button mat-button class="signup-btn">Sign up</button>
+      </section>
     </div>
   </div>
 </div>
