@@ -3,6 +3,7 @@ import {MatButton} from '@angular/material/button';
 import {FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {AuthLayoutComponent} from '../shared/auth-layout/auth-layout.component';
 
 
 @Component({
@@ -17,6 +18,7 @@ import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
     MatFormField,
     MatInput,
     MatFormField,
+    AuthLayoutComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

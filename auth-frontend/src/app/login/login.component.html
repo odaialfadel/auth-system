@@ -1,45 +1,26 @@
-<div class="login-container">
-  <div class="login-card">
-    <div class="login-left">
-      <div class="logo-container">
-        <div class="logo-circle"></div>
-        <div class="logo-text">YOUR<br><span>LOGO</span></div>
-      </div>
-      <div class="welcome-text">
-        <h1>Hello,<br>welcome!</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nisi risus.</p>
-        <button class="view-more-btn">View more</button>
-      </div>
+<app-auth-layout>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <!-- Email Field -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+
+    <!-- Password Field -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" />
+    </mat-form-field>
+
+    <div class="remember-forgot">
+      <button mat-button class="forgot-link" [routerLink]="'/forgot-password'">Forgot password?</button>
     </div>
-    <div class="login-middle">
-      <div class="divider-line"></div>
-    </div>
-    <div class="login-right">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-        <!-- Email Field -->
-        <mat-form-field appearance="outline" class="custom-field">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" />
-        </mat-form-field>
-
-        <!-- Password Field -->
-        <mat-form-field appearance="outline" class="custom-field">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" />
-        </mat-form-field>
-
-        <div class="remember-forgot">
-          <button mat-button class="forgot-link" [routerLink]="'/forgot-password'">Forgot password?</button>
-        </div>
-      </form>
-
-      <!-- Moved section out of .login-form -->
-      <section>
-        <button mat-flat-button [disabled]="!loginForm.valid" class="login-btn">Login</button>
-        <p>Not a member yet?</p>
-        <button mat-button class="signup-btn" [routerLink]="'/register'">Sign up</button>
-      </section>
-    </div>
-  </div>
-</div>
+    <section>
+      <button mat-flat-button [disabled]="!loginForm.valid" class="login-btn">Login</button>
+      <p>Not a member yet?</p>
+      <button mat-button class="signup-btn" [routerLink]="'/register'">Sign up</button>
+    </section>
+  </form>
+</app-auth-layout>

@@ -5,6 +5,7 @@ import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatIcon} from '@angular/material/icon';
+import {AuthLayoutComponent} from '../shared/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,8 @@ import {MatIcon} from '@angular/material/icon';
     RouterLink,
     MatIcon,
     MatCheckbox,
-    MatIcon
+    MatIcon,
+    AuthLayoutComponent
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
