@@ -22,7 +22,7 @@ import {AuthLayoutComponent} from '../shared/auth-layout/auth-layout.component';
     AuthLayoutComponent
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
 

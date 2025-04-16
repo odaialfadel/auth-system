@@ -6,7 +6,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
   selector: 'app-root',
   imports: [RouterOutlet, FontAwesomeModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'auth-frontend';

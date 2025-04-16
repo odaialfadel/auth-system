@@ -114,3 +114,4 @@ testem.log
 # others
 # ----------------------------
 help.md
+dist/

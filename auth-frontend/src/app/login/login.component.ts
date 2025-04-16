@@ -21,7 +21,7 @@ import {AuthLayoutComponent} from '../shared/auth-layout/auth-layout.component';
     AuthLayoutComponent,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
