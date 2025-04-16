@@ -36,9 +36,9 @@
 
       <!-- Moved section out of .login-form -->
       <section>
-        <button mat-button class="login-btn">Login</button>
+        <button mat-flat-button [disabled]="!loginForm.valid" class="login-btn">Login</button>
         <p>Not a member yet?</p>
-        <button mat-button class="signup-btn">Sign up</button>
+        <button mat-button class="signup-btn" [routerLink]="'/register'">Sign up</button>
       </section>
     </div>
   </div>

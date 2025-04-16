@@ -167,24 +167,6 @@ section p {
   transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
 }
 
-.login-btn {
-  background-color: white;
-  color: #6c88d1;
-  box-shadow: 0 0.5vw 1.5vw rgba(0, 114, 255, 0.15);
-}
-
-.signup-btn {
-  background: linear-gradient(200deg, #1b37ed, #26d0ce);
-  color: white !important;
-  box-shadow: 0 0.5vw 1.5vw rgba(0, 114, 255, 0.3);
-}
-
-.signup-btn:hover {
-  color: white !important;
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
 /* Responsive adjustments */
 @media (max-width: 992px) or (orientation: portrait) {
   .login-card {

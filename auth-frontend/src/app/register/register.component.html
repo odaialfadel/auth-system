@@ -1,1 +1,63 @@
-<p>register works!</p>
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-left">
+      <div class="logo-container">
+        <div class="logo-circle"></div>
+        <div class="logo-text">YOUR<br><span>LOGO</span></div>
+      </div>
+      <div class="welcome-text">
+        <h1>Hello,<br>welcome!</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nisi risus.</p>
+        <button class="view-more-btn">View more</button>
+      </div>
+    </div>
+    <div class="login-middle">
+      <div class="divider-line"></div>
+    </div>
+    <!-- Right Panel (registration form) -->
+    <div class="login-right">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+        <!-- Full Name -->
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Full Name</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput formControlName="fullName" type="text" />
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Email</mat-label>
+          <mat-icon matPrefix>mail</mat-icon>
+          <input matInput formControlName="email" type="email" />
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Password</mat-label>
+          <mat-icon matPrefix>lock</mat-icon>
+          <input matInput formControlName="password" type="password" />
+        </mat-form-field>
+
+        <!-- Confirm Password -->
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Confirm Password</mat-label>
+          <mat-icon matPrefix>lock</mat-icon>
+          <input matInput formControlName="confirmPassword" type="password" />
+        </mat-form-field>
+
+        <!-- Optional: Terms checkbox -->
+        <mat-checkbox formControlName="termsAccepted">
+          I agree to the <a href="#">terms & conditions</a>
+        </mat-checkbox>
+
+        <section>
+          <button mat-flat-button class="signup-btn" [disabled]="!registerForm.valid">Create Account</button>
+          <p>Already have an account?</p>
+          <button mat-button class="login-btn" [routerLink]="'/login'">Login</button>
+        </section>
+
+      </form>
+    </div>
+  </div>
+</div>
