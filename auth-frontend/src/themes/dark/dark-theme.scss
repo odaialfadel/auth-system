@@ -27,19 +27,26 @@
  *   - Overrides focus outline color for Material Design Components (MDC) text fields.
  */
 @use '@angular/material' as mat;
-@use '../palettes/purple-palette.scss' as my-theme;
+@use '../palettes/purple-palette.scss' as purple-palette;
 
-$primary: my-theme.$primary-palette;
+$primary: purple-palette.$primary-palette;
+
 
 @mixin dark-theme {
   html {
     @include mat.theme((
       color: (
         primary: $primary,
-        tertiary: my-theme.$tertiary-palette,
+        tertiary: purple-palette.$tertiary-palette,
         theme-type: dark,
       ),
-      typography: Roboto,
+      typography: (
+        plain-family: 'Roboto',
+        brand-family: Open Sans,
+        bold-weight: 900,
+        medium-weight: 500,
+        regular-weight: 300,
+      ),
       density: 0,
     ));
   }

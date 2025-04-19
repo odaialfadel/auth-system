@@ -162,8 +162,7 @@ section p {
   height: 6vh;
   border: none;
   border-radius: 1vw;
-  //font-size: clamp(0.8rem, 2vw, 1.5rem);
-  //font-weight: bold;
+  font-size: clamp(0.8rem, 1vw, 1.5rem);
   transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
 }
 
