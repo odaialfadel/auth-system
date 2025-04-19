@@ -18,6 +18,10 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Make Gradle wrapper executable
+        working-directory: ./auth-service
+        run: chmod +x gradlew
+
       - name: Build Spring Boot app with Gradle
         working-directory: ./auth-service
         run: ./gradlew bootJar
