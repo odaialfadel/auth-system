@@ -1,0 +1,64 @@
+/**
+ * Dark Theme Mixin
+ * ----------------
+ * This file defines the dark theme styles for the application using Angular Material's theming system.
+ *
+ * USAGE:
+ *   Import and include this mixin in your global theme entry point (e.g., `theme-service.scss`) like this:
+ *
+ *     @use './dark/dark-theme.scss' as dark;
+ *     @include dark.dark-theme();
+ *
+ * PURPOSE:
+ *   - Applies a custom Angular Material theme with a dark mode configuration.
+ *   - Uses a custom palette defined in `palettes/purple-palette.scss`.
+ *   - Styles anchor elements and focused input outlines with palette-based colors.
+ *
+ * DEPENDENCIES:
+ *   - Angular Material SCSS API (`@angular/material`)
+ *   - Custom color palette module (`../palettes/purple-palette.scss`)
+ *
+ * VARIABLES:
+ *   - $primary: Primary color palette from the custom theme.
+ *
+ * CONTENTS:
+ *   - Sets global theme config on the `<html>` element using Angular Material `@include mat.theme(...)`.
+ *   - Styles anchor tags (`<a>`) with custom primary shades.
+ *   - Overrides focus outline color for Material Design Components (MDC) text fields.
+ */
+@use '@angular/material' as mat;
+@use '../palettes/purple-palette.scss' as my-theme;
+
+$primary: my-theme.$primary-palette;
+
+@mixin dark-theme {
+  html {
+    @include mat.theme((
+      color: (
+        primary: $primary,
+        tertiary: my-theme.$tertiary-palette,
+        theme-type: dark,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
+  }
+
+  body {
+    a {
+      color: mat.m2-get-color-from-palette($primary, 60);
+
+      &:visited {
+        color: mat.m2-get-color-from-palette($primary, 60);
+      }
+
+      &:hover {
+        color: mat.m2-get-color-from-palette($primary, 80);
+      }
+    }
+
+    .mat-mdc-text-field-wrapper.mdc-text-field--focused {
+      --mdc-outlined-text-field-focus-outline-color: #{mat.m2-get-color-from-palette($primary, 70)};
+    }
+  }
+}
