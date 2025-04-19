@@ -10,29 +10,31 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a2980, #26d0ce);
+  background: #676278;
 }
 
 .login-card {
   display: flex;
   flex-direction: row;
   width: 100%;
-  max-width: 90vw;
+  max-width: 75vw;
   border-radius: 4vw;
   overflow: hidden;
-  background-color: #eceffe;
+  background-color: #2d2638;
   padding: 2vw;
 }
 
 .login-left {
   width: 47%;
   padding: 4vw;
-  background: linear-gradient(135deg, #0078B9, #001E3C);
+  background-size: cover;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 3vw;
+  background: url("../../../assets/images/violet-background.jpg") no-repeat center center;
+  background-size: cover;
 }
 
 .login-middle {
@@ -131,7 +133,6 @@
 }
 
 .forgot-link {
-  color: #1a73e8 !important;
   font-size: clamp(0.7rem, 2vw, 0.9rem);
   padding: 0.5vh 1vw;
   border-radius: 15px;
@@ -149,11 +150,10 @@ section  {
 }
 
 section p {
-  font-size: clamp(0.8rem, 2vw, 0.95rem);
-  font-weight: bold;
-  color: #6c88d1;
-  margin-bottom: 5%;
-  margin-top: 8%;
+  font-size: clamp(0.8rem, 1vw, 0.95rem);
+  color: floralwhite;
+  margin-bottom: 2%;
+  margin-top: 10%;
 }
 
 .login-btn,
@@ -162,8 +162,8 @@ section p {
   height: 6vh;
   border: none;
   border-radius: 1vw;
-  font-size: clamp(0.8rem, 2vw, 1.5rem);
-  font-weight: bold;
+  //font-size: clamp(0.8rem, 2vw, 1.5rem);
+  //font-weight: bold;
   transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
 }
 
