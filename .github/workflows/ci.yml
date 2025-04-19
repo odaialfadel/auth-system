@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Spring Boot app with Gradle
         working-directory: ./auth-service
-        run: ./gradlew clean build
+        run: ./gradlew clean build -Dspring.profiles.active=local
 
       - name: Upload test report
         if: failure()
