@@ -32,6 +32,9 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Column(name = "last_login")
+    private ZonedDateTime lastLogin;
+
     @Column(name = "created_at", updatable = false)
     private ZonedDateTime createdAt;
 
