@@ -1,6 +1,8 @@
 version: "3.8"
+
 services:
-  postgres:
+  # Auth-service database
+  auth-db:
     image: postgres:16
     ports:
       - "5432:5432"
@@ -13,3 +15,51 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    networks:
+      - backend-net
+
+  # Keycloak database (with volume for persistence)
+  keycloak-db:
+    image: postgres:16
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - keycloak_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - keycloak-net
+
+  # Keycloak service
+  keycloak-service:
+    image: quay.io/keycloak/keycloak:24.0.1
+    command: start-dev --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8081:8080"
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+    networks:
+      - keycloak-net
+
+networks:
+  backend-net:
+  keycloak-net:
+
+volumes:
+  keycloak_data:
