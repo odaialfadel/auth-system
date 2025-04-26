@@ -1,6 +1,11 @@
 spring:
   application:
     name: backend
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/auth_system
   datasource:
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -16,3 +21,11 @@ spring:
     compose:
       profiles:
         active: app
+
+keycloak:
+  server-url: http://localhost:8081
+  realm: auth_service
+  client-id: auth-service
+  client-secret: pYhRDW6hFch5SgWUoY3CIE8Xo8KPr1Jl
+  admin-username: admin
+  admin-password: admin
