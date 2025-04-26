@@ -1,0 +1,31 @@
+[versions]
+java = "21"
+spring-boot = "3.4.4"
+spring-dependency-management = "1.1.7"
+jib = "3.4.0"
+lombok = "1.18.30"
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+jib = { id = "com.google.cloud.tools.jib", version.ref = "jib" }
+
+[libraries]
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "spring-boot" }
+spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "spring-boot" }
+spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "spring-boot" }
+spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "spring-boot" }
+spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools", version.ref = "spring-boot" }
+spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose", version.ref = "spring-boot" }
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot" }
+spring-security-test = { group = "org.springframework.security", name = "spring-security-test", version = "6.2.3" }
+
+flyway-core = { group = "org.flywaydb", name = "flyway-core", version = "10.11.0" }
+flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version = "10.11.0" }
+
+postgresql = { group = "org.postgresql", name = "postgresql", version = "42.7.2" }
+h2 = { group = "com.h2database", name = "h2", version = "2.2.224" }
+
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+jakarta-validation-api = { group = "jakarta.validation", name = "jakarta.validation-api", version = "3.1.1" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.10.2" }
