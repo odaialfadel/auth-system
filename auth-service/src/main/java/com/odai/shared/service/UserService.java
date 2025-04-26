@@ -1,6 +1,6 @@
-package com.odai.auth.service;
+package com.odai.shared.service;
 
-import com.odai.auth.model.User;
+import com.odai.shared.model.User;
 
 public interface UserService {
     User registerUser(String email, String firstName, String lastName);

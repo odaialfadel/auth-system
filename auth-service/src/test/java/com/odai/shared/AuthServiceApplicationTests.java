@@ -1,4 +1,4 @@
-package com.odai.auth;
+package com.odai.shared;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
