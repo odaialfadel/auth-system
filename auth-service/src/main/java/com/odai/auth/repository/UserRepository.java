@@ -1,6 +1,6 @@
-package com.odai.shared.repository;
+package com.odai.auth.repository;
 
-import com.odai.shared.model.User;
+import com.odai.auth.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

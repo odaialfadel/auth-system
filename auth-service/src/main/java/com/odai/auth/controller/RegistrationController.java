@@ -1,8 +1,8 @@
-package com.odai.shared.controller;
+package com.odai.auth.controller;
 
-import com.odai.shared.dto.registeration.UserRegistrationRequest;
-import com.odai.shared.model.User;
-import com.odai.shared.service.UserService;
+import com.odai.auth.shared.dto.registeration.UserRegistrationRequest;
+import com.odai.auth.model.User;
+import com.odai.auth.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

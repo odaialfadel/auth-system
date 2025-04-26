@@ -1,4 +1,4 @@
-package com.odai.shared.dto.login;
+package com.odai.auth.shared.dto.login;
 
 import jakarta.validation.constraints.NotBlank;
 

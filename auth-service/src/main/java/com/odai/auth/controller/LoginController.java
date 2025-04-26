@@ -1,6 +1,6 @@
-package com.odai.shared.controller;
+package com.odai.auth.controller;
 
-import com.odai.shared.dto.login.LoginRequest;
+import com.odai.auth.shared.dto.login.LoginRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

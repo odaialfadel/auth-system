@@ -1,7 +1,7 @@
-package com.odai.shared.service;
+package com.odai.auth.service;
 
-import com.odai.shared.model.User;
-import com.odai.shared.repository.UserRepository;
+import com.odai.auth.model.User;
+import com.odai.auth.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

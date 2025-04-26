@@ -1,4 +1,4 @@
-package com.odai.shared.model;
+package com.odai.auth.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

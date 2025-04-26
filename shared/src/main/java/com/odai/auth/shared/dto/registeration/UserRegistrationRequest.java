@@ -1,4 +1,4 @@
-package com.odai.shared.dto.registeration;
+package com.odai.auth.shared.dto.registeration;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
