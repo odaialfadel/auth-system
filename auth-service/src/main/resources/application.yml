@@ -9,6 +9,10 @@ spring:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: update
   flyway:
-    enabled: false
+    enabled: true
     locations: classpath:db/migration
     baseline-on-migrate: true
+  docker:
+    compose:
+      profiles:
+        active: app

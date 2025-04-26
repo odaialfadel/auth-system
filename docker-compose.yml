@@ -1,8 +1,7 @@
-version: "3.8"
-
 services:
-  # Auth-service database
+  # Auth-service database (app profile)
   auth-db:
+    profiles: ["app"]
     image: postgres:16
     ports:
       - "5432:5432"
@@ -18,8 +17,9 @@ services:
     networks:
       - backend-net
 
-  # Keycloak database (with volume for persistence)
+  # Keycloak database (keycloak profile)
   keycloak-db:
+    profiles: ["keycloak"]
     image: postgres:16
     ports:
       - "5433:5432"
@@ -37,8 +37,9 @@ services:
     networks:
       - keycloak-net
 
-  # Keycloak service
+  # Keycloak service (keycloak profile)
   keycloak-service:
+    profiles: ["keycloak"]
     image: quay.io/keycloak/keycloak:24.0.1
     command: start-dev --import-realm
     environment:
