@@ -8,4 +8,7 @@ spring:
       hibernate:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: update
-
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
