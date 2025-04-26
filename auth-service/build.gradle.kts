@@ -20,7 +20,12 @@ dependencies {
     implementation(libs.spring.boot.starter.actuator)
     implementation(libs.spring.boot.starter.data.jpa)
     implementation(libs.spring.boot.starter.security)
+    implementation(libs.spring.boot.starter.oauth2.resource.server)
     implementation(libs.spring.boot.starter.web)
+
+    implementation(libs.keycloak.admin.client)
+    implementation(libs.commons.io)
+
     implementation(libs.flyway.core)
     implementation(libs.flyway.database.postgresql)
     compileOnly(libs.lombok)

@@ -14,6 +14,7 @@ jib = { id = "com.google.cloud.tools.jib", version.ref = "jib" }
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "spring-boot" }
 spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "spring-boot" }
 spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "spring-boot" }
+spring-boot-starter-oauth2-resource-server = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server", version.ref = "spring-boot"}
 spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "spring-boot" }
 spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools", version.ref = "spring-boot" }
 spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose", version.ref = "spring-boot" }
@@ -27,5 +28,11 @@ postgresql = { group = "org.postgresql", name = "postgresql", version = "42.7.2"
 h2 = { group = "com.h2database", name = "h2", version = "2.2.224" }
 
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
-jakarta-validation-api = { group = "jakarta.validation", name = "jakarta.validation-api", version = "3.1.1" }
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.10.2" }
+jakarta-validation-api = { group = "jakarta.validation", name = "jakarta.validation-api", version = "3.1.1" }
+
+# Overriding transitive commons-io version (brought by keycloak-admin-client)
+# to mitigate CVE-2024-23944 (Uncontrolled Resource Consumption)
+# Fixed in commons-io >= 2.14.0
+commons-io = { group = "commons-io", name = "commons-io", version = "2.19.0" }
+keycloak-admin-client = { group = "org.keycloak", name = "keycloak-admin-client", version = "26.0.5" }
