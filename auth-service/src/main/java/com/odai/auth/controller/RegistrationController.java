@@ -19,7 +19,7 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody UserRegistrationRequest request) {
-        User user = userService.registerUser(
+        User user = userService.registerNewUser(
                 request.email(),
                 request.firstName(),
                 request.lastName()

@@ -1,6 +1,7 @@
 package com.odai.auth.service;
 
-import com.odai.auth.keycloak.KeycloakAdminClientService;
+import com.odai.auth.exception.user.UserAlreadyExistsException;
+import com.odai.auth.keycloak.KeycloakService;
 import com.odai.auth.model.User;
 import com.odai.auth.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -14,12 +15,16 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final KeycloakAdminClientService keycloakAdminClientService;
+    private final KeycloakService keycloakService;
 
     @Transactional
     @Override
-    public User registerUser(String email, String firstName, String lastName) {
-        UUID keycloakId = UUID.fromString(createUserInKeycloak(email, firstName, lastName));
+    public User registerNewUser(String email, String firstName, String lastName) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new UserAlreadyExistsException();
+        }
+
+        UUID keycloakId = UUID.fromString(keycloakService.RegisterNewUser(email, firstName, lastName));
 
         User user = new User();
         user.setKeycloakId(keycloakId);
@@ -41,9 +46,5 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setIsActive(false);
         userRepository.save(user);
-    }
-
-    private String createUserInKeycloak(String email, String firstName, String lastName) {
-        return keycloakAdminClientService.createUser(email, firstName, lastName);
     }
 }
