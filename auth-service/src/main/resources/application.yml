@@ -23,9 +23,7 @@ spring:
         active: app
 
 keycloak:
-  server-url: http://localhost:8081
-  realm: auth_service
-  client-id: auth-service
+  server-url: http://localhost:8081/
+  realm: auth_system
+  client-id: auth_service
   client-secret: pYhRDW6hFch5SgWUoY3CIE8Xo8KPr1Jl
-  admin-username: admin
-  admin-password: admin

@@ -3,3 +3,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/local-db
     username: my_user
     password: my_pwd
+
+authentication:
+  active: false
