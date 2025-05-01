@@ -4,6 +4,7 @@ import com.odai.auth.configuration.properties.KeycloakProperties;
 import jakarta.ws.rs.core.Response;
 import lombok.AllArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class KeycloakAdminClientService {
 
+    public static final String LOCATION = "Location";
+    public static final char SLASH = '/';
     private KeycloakProperties keycloakProperties;
     private Keycloak keycloak;
 
@@ -30,20 +33,26 @@ public class KeycloakAdminClientService {
         user.setUsername(email);
         user.setEnabled(true);
 
-        Response response = keycloak.realm(keycloakProperties.getRealm())
-                .users()
-                .create(user);
+        Response response = getRealmResource().users().create(user);
 
         if (response.getStatus() != 201) {
             throw new RuntimeException("Failed to create user: HTTP " + response.getStatus());
         }
 
-        // Extract the user ID from the Location header
-        String locationHeader = response.getHeaderString("Location");
-        String userId = locationHeader.substring(locationHeader.lastIndexOf('/') + 1);
+
+        String userId = getKeycloakUserIdFromResponse(response);
 
         response.close();
         return userId;
     }
 
+    private static String getKeycloakUserIdFromResponse(Response response) {
+        String locationHeader = response.getHeaderString(LOCATION);
+        return locationHeader.substring(locationHeader.lastIndexOf(SLASH) + 1);
+    }
+
+
+    private RealmResource getRealmResource() {
+        return keycloak.realm(keycloakProperties.getRealm());
+    }
 }

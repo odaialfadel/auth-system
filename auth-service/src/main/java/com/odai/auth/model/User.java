@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class User {
     private Long id;
 
     @Column(name = "keycloak_id", nullable = false, unique = true)
-    private String keycloakId;
+    private UUID keycloakId;
 
     @Column(nullable = false, unique = true)
     private String email;

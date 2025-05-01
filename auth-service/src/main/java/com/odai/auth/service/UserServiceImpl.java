@@ -1,21 +1,25 @@
 package com.odai.auth.service;
 
+import com.odai.auth.keycloak.KeycloakAdminClientService;
 import com.odai.auth.model.User;
 import com.odai.auth.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final KeycloakAdminClientService keycloakAdminClientService;
 
     @Transactional
     @Override
     public User registerUser(String email, String firstName, String lastName) {
-        String keycloakId = createUserInKeycloak(email, firstName, lastName);
+        UUID keycloakId = UUID.fromString(createUserInKeycloak(email, firstName, lastName));
 
         User user = new User();
         user.setKeycloakId(keycloakId);
@@ -26,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByKeycloakId(String keycloakId) {
+    public User getUserByKeycloakId(UUID keycloakId) {
         return userRepository.findByKeycloakId(keycloakId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
@@ -40,7 +44,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private String createUserInKeycloak(String email, String firstName, String lastName) {
-        // TODO: Integrate with Keycloak Admin API and return the keycloakId
-        return "dummy-keycloak-id";
+        return keycloakAdminClientService.createUser(email, firstName, lastName);
     }
 }

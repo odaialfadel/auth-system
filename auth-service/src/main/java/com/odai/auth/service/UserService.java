@@ -2,8 +2,10 @@ package com.odai.auth.service;
 
 import com.odai.auth.model.User;
 
+import java.util.UUID;
+
 public interface UserService {
     User registerUser(String email, String firstName, String lastName);
-    User getUserByKeycloakId(String keycloakId);
+    User getUserByKeycloakId(UUID keycloakId);
     void deactivateUser(Long userId);
 }

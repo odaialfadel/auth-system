@@ -2,6 +2,7 @@ package com.odai.auth.configuration;
 
 import com.odai.auth.configuration.properties.KeycloakProperties;
 import lombok.AllArgsConstructor;
+import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +21,7 @@ public class KeyCloakConfiguration {
                 .realm(keycloakProperties.getRealm())
                 .clientId(keycloakProperties.getClientId())
                 .clientSecret(keycloakProperties.getClientSecret())
-                .username("admin")
-                .password("admin")
+                .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
                 .build();
     }
 }
