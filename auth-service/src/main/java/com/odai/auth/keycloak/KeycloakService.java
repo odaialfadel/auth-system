@@ -1,5 +1,6 @@
 package com.odai.auth.keycloak;
 
+import com.odai.auth.exception.InvalidOldPasswordException;
 import lombok.AllArgsConstructor;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
@@ -7,8 +8,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class KeycloakService {
-
-    private KeycloakGateway keycloakGateway;
+    private final KeycloakAdminGateway keycloakAdminGateway;
+    private final KeycloakAuthGateway  keycloakAuthGateway;
 
     /**
      * Creates a user in Keycloak.
@@ -26,6 +27,17 @@ public class KeycloakService {
         user.setUsername(email);
         user.setEnabled(true);
 
-        return keycloakGateway.createUser(user);
+        return keycloakAdminGateway.createUser(user);
+    }
+
+    public void deleteUser(String keycloakId) {
+        keycloakAdminGateway.deleteUser(keycloakId);
+    }
+
+    public void changePassword(String keycloakId, String username, String oldPassword, String newPassword) {
+        if (keycloakAuthGateway.verifyUserCredentials(username, oldPassword)) {
+            keycloakAdminGateway.changePassword(keycloakId, newPassword);
+        }
+        throw new InvalidOldPasswordException(username);
     }
 }
