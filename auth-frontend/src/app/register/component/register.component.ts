@@ -5,7 +5,7 @@ import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatIcon} from '@angular/material/icon';
-import {AuthLayoutComponent} from '../shared/auth-layout/auth-layout.component';
+import {AuthLayoutComponent} from '../../shared/auth-layout/auth-layout.component';
 import {NgIf} from '@angular/common';
 
 @Component({

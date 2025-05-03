@@ -3,8 +3,8 @@ import {MatButton} from '@angular/material/button';
 import {FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {AuthLayoutComponent} from '../shared/auth-layout/auth-layout.component';
-import {AuthService} from '../service/auth.service';
+import {AuthLayoutComponent} from '../../shared/auth-layout/auth-layout.component';
+import {LoginService} from '../service/login.service';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: LoginService) {
     this.loginForm = this.fb.group({
       identifier: ['', [Validators.required]],
       password: ['', [Validators.required]],

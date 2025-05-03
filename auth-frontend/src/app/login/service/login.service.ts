@@ -17,7 +17,7 @@ interface TokenResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class LoginService {
 
   private apiUrl = 'http://localhost:8080/api/auth'; // adjust if needed
 
