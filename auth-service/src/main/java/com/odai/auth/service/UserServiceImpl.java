@@ -5,10 +5,14 @@ import com.odai.auth.exception.UserNotFoundException;
 import com.odai.auth.keycloak.KeycloakService;
 import com.odai.auth.model.User;
 import com.odai.auth.repository.UserRepository;
+import com.odai.auth.shared.dto.user.UserDto;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -56,5 +60,26 @@ public class UserServiceImpl implements UserService {
 
         keycloakService.deleteUser(user.getKeycloakId().toString());
         userRepository.delete(user);
+    }
+
+    @Override
+    public UserDto getUserProfile(Jwt jwt) {
+
+        String keycloakId = jwt.getSubject();
+        List<String> roles = jwt.getClaimAsStringList("realm_access.roles");
+
+        User user = userRepository.findByKeycloakId(UUID.fromString(keycloakId))
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return UserDto.builder()
+                .id(user.getId())
+                .keycloakId(user.getKeycloakId())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .isActive(user.getIsActive())
+                .roles(roles)
+                .build();
     }
 }

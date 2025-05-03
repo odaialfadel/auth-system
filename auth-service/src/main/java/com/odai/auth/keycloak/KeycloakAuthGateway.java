@@ -28,7 +28,6 @@ public class KeycloakAuthGateway {
      * @param username the username to verify
      * @param password the password to verify
      * @return true if credentials are valid, false if authentication fails
-     * @throws RuntimeException if there's an unexpected error (not auth related)
      */
     public boolean verifyUserCredentials(String username, String password) {
         URI tokenEndpoint = UriComponentsBuilder.fromUri(URI.create(keycloakProperties.getServerUrl()))
