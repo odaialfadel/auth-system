@@ -2,7 +2,9 @@ package com.odai.auth.keycloak;
 
 import com.odai.auth.configuration.properties.KeycloakProperties;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -13,12 +15,21 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+@Slf4j
 @AllArgsConstructor
 @Component
 public class KeycloakAuthGateway {
     private final RestClient restClient;
     private final KeycloakProperties keycloakProperties;
 
+    /**
+     * Verifies user credentials against Keycloak server.
+     *
+     * @param username the username to verify
+     * @param password the password to verify
+     * @return true if credentials are valid, false if authentication fails
+     * @throws RuntimeException if there's an unexpected error (not auth related)
+     */
     public boolean verifyUserCredentials(String username, String password) {
         URI tokenEndpoint = UriComponentsBuilder.fromUri(URI.create(keycloakProperties.getServerUrl()))
                 .pathSegment("realms", keycloakProperties.getRealm(), "protocol", "openid-connect", "token")
@@ -33,15 +44,19 @@ public class KeycloakAuthGateway {
         form.add("password", password);
 
         try {
-            restClient.post()
+            ResponseEntity<String> response = restClient.post()
                     .uri(tokenEndpoint)
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                     .body(form)
                     .retrieve()
                     .toEntity(String.class);
-            return true;
+            return response.getStatusCode().is2xxSuccessful();
         } catch (HttpClientErrorException | HttpServerErrorException e) {
+            log.warn("Failed to verify credentials for user '{}': {}", username, e.getStatusCode());
             return false;
+        } catch (Exception e) {
+            log.error("Unexpected error while verifying credentials for user '{}'", username, e);
+            throw e;
         }
     }
 }
