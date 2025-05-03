@@ -22,12 +22,12 @@ public class UserDto {
     private UUID keycloakId;
 
     @NotBlank
-    @Email
-    private String email;
-
-    @NotBlank
     @Size(min = 5, max = 50)
     private String username;
+
+    @NotBlank
+    @Email
+    private String email;
 
     @NotBlank
     private String firstName;
