@@ -33,10 +33,25 @@ dependencies {
     developmentOnly(libs.spring.boot.devtools)
     developmentOnly(libs.spring.boot.docker.compose)
     runtimeOnly(libs.postgresql)
-    testImplementation(libs.spring.boot.starter.test)
+
+    // Test dependencies
+    testImplementation(libs.spring.boot.starter.test) {
+        exclude(group = "junit", module = "junit")  // Exclude JUnit 4
+    }
     testImplementation(libs.spring.security.test)
     testImplementation(libs.h2)
-    testRuntimeOnly(libs.junit.platform.launcher)
+
+    // JUnit dependencies managed by BOM
+    testImplementation(platform(libs.junit.bom))
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.testcontainers:junit-jupiter")
+
+    // Testcontainers
+    testImplementation(libs.junit.testcontainers)
+    testImplementation(libs.test.containers.keycloak)
+    testImplementation(libs.commons.compress)
 }
 
 tasks.test {

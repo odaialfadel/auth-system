@@ -4,6 +4,8 @@ spring-boot = "3.4.4"
 spring-dependency-management = "1.1.7"
 jib = "3.4.0"
 lombok = "1.18.30"
+junit = "5.10.2"
+testcontainers = "1.19.8"
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
@@ -19,7 +21,6 @@ spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spr
 spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools", version.ref = "spring-boot" }
 spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose", version.ref = "spring-boot" }
 spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot" }
-spring-security-test = { group = "org.springframework.security", name = "spring-security-test", version = "6.2.3" }
 
 flyway-core = { group = "org.flywaydb", name = "flyway-core", version = "10.11.0" }
 flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version = "10.11.0" }
@@ -28,7 +29,6 @@ postgresql = { group = "org.postgresql", name = "postgresql", version = "42.7.2"
 h2 = { group = "com.h2database", name = "h2", version = "2.2.224" }
 
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.10.2" }
 jakarta-validation-api = { group = "jakarta.validation", name = "jakarta.validation-api", version = "3.1.1" }
 
 # Overriding transitive commons-io version (brought by keycloak-admin-client)
@@ -36,3 +36,16 @@ jakarta-validation-api = { group = "jakarta.validation", name = "jakarta.validat
 # Fixed in commons-io >= 2.14.0
 commons-io = { group = "commons-io", name = "commons-io", version = "2.19.0" }
 keycloak-admin-client = { group = "org.keycloak", name = "keycloak-admin-client", version = "26.0.5" }
+jackson = { group = 'com.fasterxml.jackson.core', name = 'jackson-databind', version = '2.19.0'}
+commons-compress = { group = 'org.apache.commons', name = 'commons-compress', version = '1.27.1'}
+
+
+### Test dependancies ###
+spring-security-test = { group = "org.springframework.security", name = "spring-security-test", version = "6.2.3" }
+junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
+junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+# Removed explicit junit-platform-commons reference
+junit-testcontainers = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "testcontainers"}
+test-containers-keycloak = { group = 'com.github.dasniko', name = 'testcontainers-keycloak', version = '3.7.0'}
+
