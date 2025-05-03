@@ -17,11 +17,27 @@
 .name-fields {
   display: flex;
   gap: 1.5rem;
+  align-items: flex-start;
 
   .custom-field {
     flex: 1;
   }
 }
+
+mat-form-field.custom-field {
+  &.has-error {
+    margin-bottom: 1.1rem;
+  }
+}
+
+.terms-wrapper {
+
+  mat-error {
+    display: block;
+    font-size: 0.75rem;
+  }
+}
+
 
 .divider {
   display: flex;
@@ -42,7 +58,6 @@
     border-bottom: 1px solid gray;
   }
 }
-
 
 .social-buttons {
   display: flex;

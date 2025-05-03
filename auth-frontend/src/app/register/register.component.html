@@ -7,33 +7,63 @@
 
 
   <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <mat-form-field appearance="outline" class="custom-field" [class.has-error]="shouldShowError('username')">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" type="text" />
+
+      <mat-error *ngIf="shouldShowError('username')">
+        {{ getUsernameError() }}
+      </mat-error>
+    </mat-form-field>
     <div class="name-fields">
-      <mat-form-field appearance="outline" class="custom-field">
+      <mat-form-field appearance="outline" class="custom-field" [class.has-error]="shouldShowError('firstName')">
         <mat-label>First name</mat-label>
         <input matInput formControlName="firstName" type="text" />
+
+        <mat-error *ngIf="shouldShowError('firstName')">
+          {{ getFirstNameError() }}
+        </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="custom-field">
+      <mat-form-field appearance="outline" class="custom-field" [class.has-error]="shouldShowError('lastName')">
         <mat-label>Last name</mat-label>
         <input matInput formControlName="lastName" type="text" />
+
+        <mat-error *ngIf="shouldShowError('lastName')">
+          {{ getLastNameError() }}
+        </mat-error>
       </mat-form-field>
     </div>
 
-    <mat-form-field appearance="outline" class="custom-field">
+    <mat-form-field appearance="outline" class="custom-field" [class.has-error]="shouldShowError('email')">
       <mat-label>Email</mat-label>
       <mat-icon matPrefix>mail</mat-icon>
       <input matInput formControlName="email" type="email" />
+
+      <mat-error *ngIf="shouldShowError('email')">
+        {{ getEmailError() }}
+      </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="custom-field">
+    <mat-form-field appearance="outline" class="custom-field" [class.has-error]="shouldShowError('password')">
       <mat-label>Password</mat-label>
       <mat-icon matPrefix>lock</mat-icon>
       <input matInput formControlName="password" type="password" />
+
+      <mat-error *ngIf="shouldShowError('password')">
+        {{ getPasswordError() }}
+      </mat-error>
     </mat-form-field>
 
-    <mat-checkbox formControlName="termsAccepted">
-      I agree to the <a href="#">Terms & Conditions</a>
-    </mat-checkbox>
+    <div class="terms-wrapper" [class.has-error]="shouldShowError('termsAccepted')">
+      <mat-checkbox formControlName="termsAccepted">
+        I agree to the <a href="#" target="_blank">Terms & Conditions</a>
+      </mat-checkbox>
+
+      <mat-error *ngIf="shouldShowError('termsAccepted')">
+        You must agree to the Terms & Conditions
+      </mat-error>
+    </div>
 
     <section class="create-account-btn">
       <button mat-flat-button class="create-account-btn" [disabled]="!registerForm.valid">Create Account</button>
