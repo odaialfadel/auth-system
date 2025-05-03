@@ -22,10 +22,4 @@ public class KeycloakProperties {
 
     @NotBlank
     private String clientSecret;
-
-    @NotBlank
-    private String adminUsername;
-
-    @NotBlank
-    private String adminPassword;
 }

@@ -14,7 +14,7 @@ public class KeycloakService {
     /**
      * Creates a user in Keycloak.
      *
-     * @param email     User's email (also used as username).
+     * @param email     User's emailOrUsername (also used as username).
      * @param firstName User's first name.
      * @param lastName  User's last name.
      * @return keycloakId The ID of the created user.
@@ -34,10 +34,10 @@ public class KeycloakService {
         keycloakAdminGateway.deleteUser(keycloakId);
     }
 
-    public void changePassword(String keycloakId, String username, String oldPassword, String newPassword) {
-        if (keycloakAuthGateway.verifyUserCredentials(username, oldPassword)) {
-            keycloakAdminGateway.changePassword(keycloakId, newPassword);
-        }
-        throw new InvalidOldPasswordException(username);
-    }
+//    public void changePassword(String keycloakId, String username, String oldPassword, String newPassword) {
+//        if (keycloakAuthGateway.verifyUserCredentials(username, oldPassword)) {
+//            keycloakAdminGateway.changePassword(keycloakId, newPassword);
+//        }
+//        throw new InvalidOldPasswordException(username);
+//    }
 }

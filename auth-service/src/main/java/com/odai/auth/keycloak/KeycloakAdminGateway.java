@@ -30,7 +30,7 @@ public class KeycloakAdminGateway {
     public String createUser(UserRepresentation user) {
         Response response = realmResource.users().create(user);
         return handleResponse(response, HttpStatus.SC_CREATED, () -> getKeycloakUserIdFromResponse(response),
-                "Keycloak user creation failed for email '{}' with status '{}'", user.getEmail(), response.getStatus());
+                "Keycloak user creation failed for emailOrUsername '{}' with status '{}'", user.getEmail(), response.getStatus());
     }
 
     private static String getKeycloakUserIdFromResponse(Response response) {
@@ -72,7 +72,7 @@ public class KeycloakAdminGateway {
         try {
             realmResource.users().get(keycloakId).executeActionsEmail(List.of(KeycloakConstants.UPDATE_PASSWORD));
         } catch (Exception ex) {
-            throw new KeycloakGatewayException("Failed to send password reset email to user with id '{}'", ex, keycloakId);
+            throw new KeycloakGatewayException("Failed to send password reset emailOrUsername to user with id '{}'", ex, keycloakId);
         }
     }
 

@@ -24,7 +24,7 @@ public class RegistrationController {
                 request.firstName(),
                 request.lastName()
         );
-        log.info("User registered successfully: email= {}, id= {}", user.getEmail(), user.getId());
+        log.info("User registered successfully: emailOrUsername= {}, id= {}", user.getEmail(), user.getId());
         return ResponseEntity.ok(user);
     }
 

@@ -7,7 +7,6 @@ import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestClient;
 
 @AllArgsConstructor
 @Configuration
@@ -24,10 +23,5 @@ public class KeyCloakConfiguration {
                 .clientSecret(keycloakProperties.getClientSecret())
                 .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
                 .build();
-    }
-
-    @Bean
-    public RestClient restClient() {
-        return RestClient.builder().build();
     }
 }
