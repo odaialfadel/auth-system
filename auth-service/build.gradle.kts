@@ -1,8 +1,8 @@
 plugins {
+    java
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.jib)
-    java
 }
 
 group = "com.odai.auth"
@@ -17,41 +17,30 @@ java {
 dependencies {
     implementation(project(":shared"))
 
-    implementation(libs.spring.boot.starter.actuator)
-    implementation(libs.spring.boot.starter.data.jpa)
-    implementation(libs.spring.boot.starter.security)
-    implementation(libs.spring.boot.starter.oauth2.resource.server)
-    implementation(libs.spring.boot.starter.web)
+    // Core dependencies
+    implementation(libs.bundles.spring.boot)
+    implementation(libs.bundles.flyway)
+    implementation(libs.bundles.jackson)
 
-    implementation(libs.keycloak.admin.client)
-    implementation(libs.commons.io)
-
-    implementation(libs.flyway.core)
-    implementation(libs.flyway.database.postgresql)
+    implementation(libs.postgresql)
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
+    implementation(libs.jakarta.validation.api)
+    implementation(libs.commons.io)
+    implementation(libs.commons.compress)
+    implementation(libs.keycloak.admin.client)
+
+    // Development and runtime
     developmentOnly(libs.spring.boot.devtools)
-    developmentOnly(libs.spring.boot.docker.compose)
-    runtimeOnly(libs.postgresql)
+    runtimeOnly(libs.spring.boot.docker.compose)
 
     // Test dependencies
-    testImplementation(libs.spring.boot.starter.test) {
-        exclude(group = "junit", module = "junit")  // Exclude JUnit 4
-    }
+    testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.spring.security.test)
-    testImplementation(libs.h2)
-
-    // JUnit dependencies managed by BOM
     testImplementation(platform(libs.junit.bom))
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("org.testcontainers:junit-jupiter")
-
-    // Testcontainers
-    testImplementation(libs.junit.testcontainers)
-    testImplementation(libs.test.containers.keycloak)
-    testImplementation(libs.commons.compress)
+    testImplementation(libs.bundles.junit)
+    testImplementation(libs.bundles.testcontainers)
+    testImplementation(libs.h2)
 }
 
 tasks.test {

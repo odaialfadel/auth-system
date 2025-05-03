@@ -16,7 +16,7 @@ dependencies {
     annotationProcessor(libs.lombok)
 
     implementation(libs.jakarta.validation.api)
-    implementation(libs.jackson)
+    implementation(libs.jackson.databind)
 }
 
 tasks.test {
