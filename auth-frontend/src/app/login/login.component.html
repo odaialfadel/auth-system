@@ -1,10 +1,10 @@
 <app-auth-layout>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-    <!-- Email Field -->
+    <!-- Email or username Field -->
     <mat-form-field appearance="outline" class="custom-field">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" type="email" />
+      <mat-label>Email or username</mat-label>
+      <input matInput formControlName="identifier" type="text" />
     </mat-form-field>
 
     <!-- Password Field -->

@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators} fr
 import {RouterLink} from '@angular/router';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {AuthLayoutComponent} from '../shared/auth-layout/auth-layout.component';
+import {AuthService} from '../service/auth.service';
 
 
 @Component({
@@ -27,16 +28,25 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.email]],
-      password: [''],
+      identifier: ['', [Validators.required]],
+      password: ['', [Validators.required]],
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Form data:', this.loginForm.value);
+      const { identifier, password } = this.loginForm.value;
+
+      this.authService.login(identifier, password).subscribe({
+        next: token => {
+          console.log('login success', token);
+        },
+        error: error => {
+          console.log('login failed', error);
+        }
+      })
     }
   }
 }
