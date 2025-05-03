@@ -1,0 +1,31 @@
+{
+  "realm": "test-realm",
+  "enabled": true,
+  "requiredActions": [],
+  "clients": [
+    {
+      "clientId": "test-client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "client-secret",
+      "directAccessGrantsEnabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect"
+    }
+  ],
+  "users": [
+    {
+      "username": "odaii",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "secret",
+          "temporary": false
+        }
+      ],
+      "requiredActions": []
+    }
+  ]
+}
