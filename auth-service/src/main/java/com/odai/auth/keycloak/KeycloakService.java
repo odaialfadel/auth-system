@@ -2,8 +2,11 @@ package com.odai.auth.keycloak;
 
 import com.odai.auth.exception.InvalidOldPasswordException;
 import lombok.AllArgsConstructor;
+import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -19,15 +22,32 @@ public class KeycloakService {
      * @param lastName  User's last name.
      * @return keycloakId The ID of the created user.
      */
-    public String RegisterNewUser(String email, String firstName, String lastName) {
+    public String RegisterNewUser(String username, String firstName, String lastName, String email, String password) {
         UserRepresentation user = new UserRepresentation();
+        user.setUsername(username);
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setUsername(email);
         user.setEnabled(true);
 
-        return keycloakAdminGateway.createUser(user);
+        // Set required actions before login
+        user.setRequiredActions(List.of("VERIFY_EMAIL"));
+
+        CredentialRepresentation credential = createPasswordCredentials(password);
+        user.setCredentials(List.of(credential));
+
+        String keycloakId = keycloakAdminGateway.createUser(user);
+        keycloakAdminGateway.assignToGroup(keycloakId, "standard-users");
+
+        return keycloakId;
+    }
+
+    private CredentialRepresentation createPasswordCredentials(String password) {
+        CredentialRepresentation credential = new CredentialRepresentation();
+        credential.setType(CredentialRepresentation.PASSWORD);
+        credential.setValue(password);
+        credential.setTemporary(false);
+        return credential;
     }
 
     public void deleteUser(String keycloakId) {

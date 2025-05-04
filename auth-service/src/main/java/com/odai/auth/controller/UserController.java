@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<UserDto> getUserInfo(@AuthenticationPrincipal Jwt jwt) {
-        UserDto user = userService.getUserProfile(jwt);
-        return ResponseEntity.ok(user);
+//        UserDto user = userService.getUserProfile(jwt);
+        return ResponseEntity.ok(null);
     }
 }

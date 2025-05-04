@@ -1,8 +1,8 @@
 package com.odai.auth.controller;
 
 import com.odai.auth.shared.dto.registeration.UserRegistrationRequest;
-import com.odai.auth.model.User;
 import com.odai.auth.service.UserService;
+import com.odai.auth.shared.dto.registeration.UserRegistrationResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,20 +18,21 @@ public class RegistrationController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody UserRegistrationRequest request) {
-        User user = userService.registerNewUser(
-                request.email(),
+    public ResponseEntity<UserRegistrationResponse> registerUser(@RequestBody UserRegistrationRequest request) {
+        UserRegistrationResponse createdUser = userService.registerNewUser(
+                request.username(),
                 request.firstName(),
-                request.lastName()
+                request.lastName(),
+                request.email(),
+                request.password()
         );
-        log.info("User registered successfully: emailOrUsername= {}, id= {}", user.getEmail(), user.getId());
-        return ResponseEntity.ok(user);
+        log.info("User registered successfully: username= {}, id= {}", createdUser.username(), createdUser.userId());
+        return ResponseEntity.ok(createdUser);
     }
 
     @GetMapping("/keycloak/{keycloakId}")
-    public ResponseEntity<User> getUserByKeycloakId(@PathVariable UUID keycloakId) {
-        User user = userService.getUserByKeycloakId(keycloakId);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserRegistrationResponse> getUserByKeycloakId(@PathVariable UUID keycloakId) {
+        return ResponseEntity.ok(userService.getUserByKeycloakId(keycloakId));
     }
 
     @PostMapping("/{userId}/deactivate")

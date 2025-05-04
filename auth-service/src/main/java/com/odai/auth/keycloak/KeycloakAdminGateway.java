@@ -7,8 +7,11 @@ import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import org.apache.http.HttpStatus;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.GroupResource;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.GroupRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Component;
@@ -22,9 +25,11 @@ public class KeycloakAdminGateway {
     private static final char SLASH = '/';
 
     private final RealmResource realmResource;
+    private final List<GroupRepresentation> cachedGroups;
 
     public KeycloakAdminGateway(KeycloakProperties keycloakProperties, Keycloak keycloak) {
         this.realmResource = keycloak.realm(keycloakProperties.getRealm());
+        this.cachedGroups = realmResource.groups().groups();
     }
 
     public String createUser(UserRepresentation user) {
@@ -40,7 +45,7 @@ public class KeycloakAdminGateway {
 
     public UserRepresentation getUserByKeycloakId(String keycloakId) {
         try {
-            return realmResource.users().get(keycloakId).toRepresentation();
+            return getUserResourceByKeycloakId(keycloakId).toRepresentation();
         } catch (NotFoundException ex) {
             throw new UserNotFoundException(keycloakId, ex);
         } catch (Exception ex) {
@@ -62,7 +67,7 @@ public class KeycloakAdminGateway {
         credential.setTemporary(false);
 
         try {
-            realmResource.users().get(keycloakId).resetPassword(credential);
+            getUserResourceByKeycloakId(keycloakId).resetPassword(credential);
         } catch (Exception ex) {
             throw new KeycloakGatewayException("Failed to reset password for keycloak id '{}'", keycloakId, ex);
         }
@@ -70,7 +75,7 @@ public class KeycloakAdminGateway {
 
     public void resetPassword(String keycloakId) {
         try {
-            realmResource.users().get(keycloakId).executeActionsEmail(List.of(KeycloakConstants.UPDATE_PASSWORD));
+            getUserResourceByKeycloakId(keycloakId).executeActionsEmail(List.of(KeycloakConstants.UPDATE_PASSWORD));
         } catch (Exception ex) {
             throw new KeycloakGatewayException("Failed to send password reset emailOrUsername to user with id '{}'", ex, keycloakId);
         }
@@ -79,12 +84,25 @@ public class KeycloakAdminGateway {
     public void assignRole(String keycloakId, String roleName) {
         try {
             RoleRepresentation role = realmResource.roles().get(roleName).toRepresentation();
-            realmResource.users().get(keycloakId).roles().realmLevel().add(List.of(role));
+            getUserResourceByKeycloakId(keycloakId).roles().realmLevel().add(List.of(role));
         } catch (NotFoundException ex) {
             throw new UserNotFoundException(keycloakId, ex);
         } catch (Exception ex) {
             throw new KeycloakGatewayException("Failed to assign role '{}' to user '{}'", roleName, keycloakId, ex);
         }
+    }
+
+    public void assignToGroup(String keycloakId, String groupName) {
+        GroupRepresentation group = cachedGroups.stream()
+                .filter(g -> g.getName().equalsIgnoreCase(groupName))
+                .findFirst()
+                .orElseThrow(() -> new KeycloakGatewayException("Failed to find group with name '{}'", groupName));
+        GroupResource groupResource = realmResource.groups().group(group.getId());
+        getUserResourceByKeycloakId(keycloakId).joinGroup(groupResource.toRepresentation().getId());
+    }
+
+    private UserResource getUserResourceByKeycloakId(String keycloakId) {
+        return realmResource.users().get(keycloakId);
     }
 
     public void deleteUser(String userId) {

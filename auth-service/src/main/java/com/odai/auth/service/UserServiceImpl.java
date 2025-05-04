@@ -5,6 +5,7 @@ import com.odai.auth.exception.UserNotFoundException;
 import com.odai.auth.keycloak.KeycloakService;
 import com.odai.auth.model.User;
 import com.odai.auth.repository.UserRepository;
+import com.odai.auth.shared.dto.registeration.UserRegistrationResponse;
 import com.odai.auth.shared.dto.user.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,31 +19,40 @@ import java.util.UUID;
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
+    private static final String REGISTRATION_SUCCESSFUL_PLEASE_VERIFY_YOUR_EMAIL = "Registration successful! Please verify your email.";
+    private static final String USER_FOUND = "User found.";
 
     private final UserRepository userRepository;
     private final KeycloakService keycloakService;
 
     @Transactional
     @Override
-    public User registerNewUser(String email, String firstName, String lastName) {
+    public UserRegistrationResponse registerNewUser(String username, String firstName, String lastName, String email, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new UserAlreadyExistsException(email);
         }
 
-        UUID keycloakId = UUID.fromString(keycloakService.RegisterNewUser(email, firstName, lastName));
+        UUID keycloakId = UUID.fromString(keycloakService.RegisterNewUser(username, firstName, lastName, email, password));
 
-        User user = new User();
-        user.setKeycloakId(keycloakId);
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        return userRepository.save(user);
+        User saveUser = userRepository.save(User.builder()
+                .keycloakId(keycloakId)
+                .username(username)
+                .email(email)
+                .firstName(firstName)
+                .lastName(lastName)
+                .build());
+
+        return new UserRegistrationResponse(
+                saveUser.getId(), saveUser.getKeycloakId(), saveUser.getUsername(), saveUser.getEmail(),
+                REGISTRATION_SUCCESSFUL_PLEASE_VERIFY_YOUR_EMAIL);
     }
 
     @Override
-    public User getUserByKeycloakId(UUID keycloakId) {
-        return userRepository.findByKeycloakId(keycloakId)
+    public UserRegistrationResponse getUserByKeycloakId(UUID keycloakId) {
+        User user = userRepository.findByKeycloakId(keycloakId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        return new UserRegistrationResponse(user.getId(), user.getKeycloakId(), user.getUsername(), user.getEmail(),
+                USER_FOUND);
     }
 
     @Override
@@ -60,26 +70,5 @@ public class UserServiceImpl implements UserService {
 
         keycloakService.deleteUser(user.getKeycloakId().toString());
         userRepository.delete(user);
-    }
-
-    @Override
-    public UserDto getUserProfile(Jwt jwt) {
-
-        String keycloakId = jwt.getSubject();
-        List<String> roles = jwt.getClaimAsStringList("realm_access.roles");
-
-        User user = userRepository.findByKeycloakId(UUID.fromString(keycloakId))
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        return UserDto.builder()
-                .id(user.getId())
-                .keycloakId(user.getKeycloakId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .isActive(user.getIsActive())
-                .roles(roles)
-                .build();
     }
 }
