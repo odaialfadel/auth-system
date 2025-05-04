@@ -28,7 +28,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: LoginService) {
+  constructor(private fb: FormBuilder, private loginService: LoginService) {
     this.loginForm = this.fb.group({
       identifier: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -39,7 +39,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { identifier, password } = this.loginForm.value;
 
-      this.authService.login(identifier, password).subscribe({
+      this.loginService.login(identifier, password).subscribe({
         next: token => {
           console.log('login success', token);
         },

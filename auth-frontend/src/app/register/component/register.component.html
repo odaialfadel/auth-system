@@ -61,7 +61,7 @@
       </mat-checkbox>
 
       <mat-error *ngIf="shouldShowError('termsAccepted')">
-        You must agree to the Terms & Conditions
+        {{ getTermsError() }}
       </mat-error>
     </div>
 

@@ -7,6 +7,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {MatIcon} from '@angular/material/icon';
 import {AuthLayoutComponent} from '../../shared/auth-layout/auth-layout.component';
 import {NgIf} from '@angular/common';
+import {RegisterService} from '../service/register.service';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private registerService: RegisterService) {
   }
 
   ngOnInit(): void {
@@ -62,16 +63,6 @@ export class RegisterComponent implements OnInit {
       ]],
       termsAccepted: [false, Validators.requiredTrue]
     });
-  }
-
-  submitted = false;
-
-  onRegister(): void {
-    this.submitted = true;
-    if (this.registerForm.valid) {
-      // handle registration logic here
-      console.log(this.registerForm.value);
-    }
   }
 
   shouldShowError(controlName: string): boolean {
@@ -164,5 +155,23 @@ export class RegisterComponent implements OnInit {
       return 'You must agree to the Terms & Conditions';
     }
     return null;
+  }
+
+  submitted = false;
+
+  onRegister(): void {
+    this.submitted = true;
+    if (this.registerForm.valid) {
+      const { username, firstName, lastName, email, password } = this.registerForm.value;
+
+      this.registerService.register(username, firstName, lastName, email, password).subscribe({
+        next: (data) => {
+          console.log('Registration success', data);
+        },
+        error: (error) => {
+          console.log('Registration error', error);
+        }
+      })
+    }
   }
 }
