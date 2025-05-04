@@ -1,4 +1,9 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/auth_system
   datasource:
     url: jdbc:h2:mem:test-db;DB_CLOSE_DELAY=-1
     driver-class-name: org.h2.Driver
@@ -7,3 +12,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+authentication:
+  active: false
+
+keycloak:
+  server-url: http://localhost:8081/
+  realm: auth_system
+  client-id: auth_service
+  client-secret: pYhRDW6hFch5SgWUoY3CIE8Xo8KPr1Jl
