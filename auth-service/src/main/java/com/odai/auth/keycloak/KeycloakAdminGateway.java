@@ -25,11 +25,9 @@ public class KeycloakAdminGateway {
     private static final char SLASH = '/';
 
     private final RealmResource realmResource;
-    private final List<GroupRepresentation> cachedGroups;
 
     public KeycloakAdminGateway(KeycloakProperties keycloakProperties, Keycloak keycloak) {
         this.realmResource = keycloak.realm(keycloakProperties.getRealm());
-        this.cachedGroups = realmResource.groups().groups();
     }
 
     public String createUser(UserRepresentation user) {
@@ -93,7 +91,7 @@ public class KeycloakAdminGateway {
     }
 
     public void assignToGroup(String keycloakId, String groupName) {
-        GroupRepresentation group = cachedGroups.stream()
+        GroupRepresentation group = realmResource.groups().groups().stream()
                 .filter(g -> g.getName().equalsIgnoreCase(groupName))
                 .findFirst()
                 .orElseThrow(() -> new KeycloakGatewayException("Failed to find group with name '{}'", groupName));
