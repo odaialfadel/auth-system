@@ -30,6 +30,8 @@ spring-boot-starter-oauth2-resource-server = { group = "org.springframework.boot
 spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "spring-boot" }
 spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools", version.ref = "spring-boot" }
 spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose", version.ref = "spring-boot" }
+spring-boot-starter-mail = { group = "org.springframework.boot", name = "spring-boot-starter-mail", version.ref = "spring-boot" }
+spring-boot-starter-thymleaf = { group = "org.springframework.boot", name = "spring-boot-starter-thymleaf", version.ref = "spring-boot" }
 spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot" }
 
 # Database
@@ -67,7 +69,9 @@ spring-boot = [
     "spring-boot-starter-oauth2-resource-server",
     "spring-boot-starter-actuator",
     "spring-boot-devtools",
-    "spring-boot-docker-compose"
+    "spring-boot-docker-compose",
+    "spring-boot-starter-mail",
+    "spring-boot-starter-thymleaf"
 ]
 flyway = ["flyway-core", "flyway-postgresql"]
 junit = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine"]
