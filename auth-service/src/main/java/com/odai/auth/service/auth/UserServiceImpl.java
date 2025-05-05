@@ -1,19 +1,15 @@
-package com.odai.auth.service;
+package com.odai.auth.service.auth;
 
 import com.odai.auth.exception.UserAlreadyExistsException;
 import com.odai.auth.exception.UserNotFoundException;
-import com.odai.auth.keycloak.KeycloakService;
-import com.odai.auth.model.User;
-import com.odai.auth.repository.UserRepository;
+import com.odai.auth.gateway.keycloak.KeycloakService;
+import com.odai.auth.domain.model.User;
+import com.odai.auth.domain.repository.UserRepository;
 import com.odai.auth.shared.dto.registeration.UserRegistrationResponse;
-import com.odai.auth.shared.dto.user.UserDto;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor

@@ -1,9 +1,6 @@
-package com.odai.auth.service;
+package com.odai.auth.service.auth;
 
-import com.odai.auth.model.User;
 import com.odai.auth.shared.dto.registeration.UserRegistrationResponse;
-import com.odai.auth.shared.dto.user.UserDto;
-import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.UUID;
 

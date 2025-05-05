@@ -1,4 +1,4 @@
-package com.odai.auth.keycloak;
+package com.odai.auth.gateway.keycloak;
 
 import com.odai.auth.configuration.properties.KeycloakProperties;
 import com.odai.auth.exception.KeycloakGatewayException;
@@ -34,6 +34,10 @@ public class KeycloakAdminGateway {
         Response response = realmResource.users().create(user);
         return handleResponse(response, HttpStatus.SC_CREATED, () -> getKeycloakUserIdFromResponse(response),
                 "Keycloak user creation failed for emailOrUsername '{}' with status '{}'", user.getEmail(), response.getStatus());
+    }
+
+    public void sendVerificationMail(String keycloakId, List<String> requiredActions) {
+        getUserResourceByKeycloakId(keycloakId).executeActionsEmail(requiredActions);
     }
 
     private static String getKeycloakUserIdFromResponse(Response response) {

@@ -1,6 +1,6 @@
-package com.odai.auth.repository;
+package com.odai.auth.domain.repository;
 
-import com.odai.auth.model.User;
+import com.odai.auth.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

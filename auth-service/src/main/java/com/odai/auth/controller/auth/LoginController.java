@@ -1,6 +1,6 @@
-package com.odai.auth.controller;
+package com.odai.auth.controller.auth;
 
-import com.odai.auth.keycloak.KeycloakAuthGateway;
+import com.odai.auth.gateway.keycloak.KeycloakAuthGateway;
 import com.odai.auth.shared.dto.login.LoginRequest;
 import lombok.AllArgsConstructor;
 import org.keycloak.representations.AccessTokenResponse;

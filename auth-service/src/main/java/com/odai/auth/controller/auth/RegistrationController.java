@@ -1,7 +1,7 @@
-package com.odai.auth.controller;
+package com.odai.auth.controller.auth;
 
 import com.odai.auth.shared.dto.registeration.UserRegistrationRequest;
-import com.odai.auth.service.UserService;
+import com.odai.auth.service.auth.UserService;
 import com.odai.auth.shared.dto.registeration.UserRegistrationResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

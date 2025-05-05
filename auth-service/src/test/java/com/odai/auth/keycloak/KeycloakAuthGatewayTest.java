@@ -1,6 +1,7 @@
 package com.odai.auth.keycloak;
 
 import com.odai.auth.configuration.properties.KeycloakProperties;
+import com.odai.auth.gateway.keycloak.KeycloakAuthGateway;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

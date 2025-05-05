@@ -1,6 +1,5 @@
-package com.odai.auth.keycloak;
+package com.odai.auth.gateway.keycloak;
 
-import com.odai.auth.exception.InvalidOldPasswordException;
 import lombok.AllArgsConstructor;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -31,13 +30,15 @@ public class KeycloakService {
         user.setEnabled(true);
 
         // Set required actions before login
-        user.setRequiredActions(List.of("VERIFY_EMAIL"));
+        List<String> requiredActions = List.of("VERIFY_EMAIL");
+        user.setRequiredActions(requiredActions);
 
         CredentialRepresentation credential = createPasswordCredentials(password);
         user.setCredentials(List.of(credential));
 
         String keycloakId = keycloakAdminGateway.createUser(user);
         keycloakAdminGateway.assignToGroup(keycloakId, "standard-users");
+        keycloakAdminGateway.sendVerificationMail(keycloakId, requiredActions);
 
         return keycloakId;
     }

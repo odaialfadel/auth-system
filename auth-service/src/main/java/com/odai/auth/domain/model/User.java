@@ -1,4 +1,4 @@
-package com.odai.auth.model;
+package com.odai.auth.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;

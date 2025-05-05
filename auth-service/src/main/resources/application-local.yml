@@ -3,6 +3,17 @@ spring:
     url: jdbc:postgresql://localhost:5432/local-db
     username: my_user
     password: my_pwd
+  mail:
+    host: localhost
+    port: 1025
+    username: ''
+    password: ''
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
 
 authentication:
   active: false

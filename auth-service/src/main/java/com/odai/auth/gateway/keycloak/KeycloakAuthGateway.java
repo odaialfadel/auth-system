@@ -1,4 +1,4 @@
-package com.odai.auth.keycloak;
+package com.odai.auth.gateway.keycloak;
 
 import com.odai.auth.configuration.properties.KeycloakProperties;
 import lombok.AllArgsConstructor;
