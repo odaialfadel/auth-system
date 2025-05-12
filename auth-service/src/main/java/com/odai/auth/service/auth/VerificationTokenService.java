@@ -14,7 +14,7 @@ import java.util.UUID;
 public class VerificationTokenService {
     private final VerificationTokenRepository tokenRepository;
 
-    public VerificationToken createToken(String userId) {
+    public VerificationToken createToken(long userId) {
         String token = UUID.randomUUID().toString();
         ZonedDateTime expiresAt = ZonedDateTime.now().plusHours(24);
         VerificationToken entity = new VerificationToken(token, userId, expiresAt);

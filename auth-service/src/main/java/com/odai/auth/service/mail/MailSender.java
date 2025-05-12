@@ -1,7 +1,7 @@
 package com.odai.auth.service.mail;
 
-import jakarta.mail.internet.MimeMessage;
+import com.odai.auth.service.mail.model.EmailDetails;
 
 public interface MailSender {
-    void sendMail(String to, String subject, MimeMessage mimeMessage);
+    void sendMail(EmailDetails emailDetails);
 }

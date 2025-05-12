@@ -4,5 +4,11 @@ spring:
     username: my_user
     password: my_pwd
 
+mail:
+  base-url:
+  from: "no-reply@test.com"
+  verify:
+    service-name: "Auth-System"
+
 authentication:
   active: false
