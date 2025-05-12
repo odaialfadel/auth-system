@@ -3,18 +3,22 @@ package com.odai.auth.keycloak;
 import com.odai.auth.configuration.properties.KeycloakProperties;
 import com.odai.auth.gateway.keycloak.KeycloakAuthGateway;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.keycloak.representations.AccessTokenResponse;
+import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Testcontainers
 class KeycloakAuthGatewayTest {
 
-    private KeycloakAuthGateway gateway;
+    private static KeycloakAuthGateway gateway;
 
     @Container
     private static final KeycloakContainer KEYCLOAK_CONTAINER = new KeycloakContainer("quay.io/keycloak/keycloak:26.2")
@@ -27,8 +31,23 @@ class KeycloakAuthGatewayTest {
     private static final String TEST_USERNAME = "odaii";
     private static final String TEST_PASSWORD = "secret";
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
+        MailProperties mailProperties = new MailProperties();
+        mailProperties.setHost("localhost");
+        mailProperties.setPort(1025);
+        mailProperties.setUsername("");
+        mailProperties.setPassword("");
+        mailProperties.setProtocol("smtp");
+
+
+        Map<String, String> propertiesMap = new HashMap<>();
+        propertiesMap.put("mail.smtp.auth", "false");
+        propertiesMap.put("mail.smtp.starttls.enable", "false");
+
+        mailProperties.getProperties().putAll(propertiesMap);
+
+
         KeycloakProperties properties = new KeycloakProperties();
         properties.setServerUrl(KEYCLOAK_CONTAINER.getAuthServerUrl());
         properties.setRealm("test-realm");

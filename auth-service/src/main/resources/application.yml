@@ -21,7 +21,17 @@ spring:
     compose:
       profiles:
         active: app
-
+  mail:
+    host: localhost
+    port: 1025
+    username: ''
+    password: ''
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
 keycloak:
   server-url: http://localhost:8081/
   realm: auth_system
