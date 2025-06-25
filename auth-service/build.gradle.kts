@@ -1,8 +1,8 @@
 plugins {
+    java
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.jib)
-    java
 }
 
 group = "com.odai.auth"
@@ -17,21 +17,30 @@ java {
 dependencies {
     implementation(project(":shared"))
 
-    implementation(libs.spring.boot.starter.actuator)
-    implementation(libs.spring.boot.starter.data.jpa)
-    implementation(libs.spring.boot.starter.security)
-    implementation(libs.spring.boot.starter.web)
-    implementation(libs.flyway.core)
-    implementation(libs.flyway.database.postgresql)
+    // Core dependencies
+    implementation(libs.bundles.spring.boot)
+    implementation(libs.bundles.flyway)
+    implementation(libs.bundles.jackson)
+
+    implementation(libs.postgresql)
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
+    implementation(libs.jakarta.validation.api)
+    implementation(libs.commons.io)
+    implementation(libs.commons.compress)
+    implementation(libs.keycloak.admin.client)
+
+    // Development and runtime
     developmentOnly(libs.spring.boot.devtools)
-    developmentOnly(libs.spring.boot.docker.compose)
-    runtimeOnly(libs.postgresql)
+    runtimeOnly(libs.spring.boot.docker.compose)
+
+    // Test dependencies
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.spring.security.test)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.bundles.junit)
+    testImplementation(libs.bundles.testcontainers)
     testImplementation(libs.h2)
-    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks.test {

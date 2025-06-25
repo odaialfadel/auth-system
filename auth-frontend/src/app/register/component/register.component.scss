@@ -1,0 +1,79 @@
+@use '../../shared/auth-layout/auth-layout.component';
+
+.form-header {
+  text-align: left;
+  margin-bottom: 2rem;
+  h2 {
+    font-weight: normal;
+    color: floralwhite;
+    font-size: xxx-large;
+  }
+
+  p {
+    color: #b1adbb;
+  }
+}
+
+.name-fields {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+
+  .custom-field {
+    flex: 1;
+  }
+}
+
+mat-form-field.custom-field {
+  &.has-error {
+    margin-bottom: 1.1rem;
+  }
+}
+
+.terms-wrapper {
+
+  mat-error {
+    display: block;
+    font-size: 0.75rem;
+  }
+}
+
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: gray;
+  margin: 2rem 0;
+  font-size: 0.9rem;
+
+  span {
+    padding: 0 1rem;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid gray;
+  }
+}
+
+.social-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}

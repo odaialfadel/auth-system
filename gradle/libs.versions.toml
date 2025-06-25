@@ -1,9 +1,20 @@
 [versions]
 java = "21"
-spring-boot = "3.4.4"
+spring-boot = "3.4.4"  # Latest stable as of May 2025
 spring-dependency-management = "1.1.7"
-jib = "3.4.0"
-lombok = "1.18.30"
+jib = "3.4.3"  # Updated to latest
+lombok = "1.18.34"  # Updated to latest
+junit = "5.11.3"  # Updated to latest
+testcontainers = "1.20.2"  # Updated to latest
+flyway = "10.18.0"  # Updated to latest
+postgresql = "42.7.4"  # Updated to latest
+h2 = "2.3.232"  # Updated to latest
+jakarta-validation = "3.1.1"
+spring-security = "6.3.3"  # Updated to latest
+keycloak = "26.0.5"  # Updated to match KeycloakContainer version
+jackson = "2.19.0"
+commons-io = "2.19.0"  # For CVE-2024-23944 mitigation
+commons-compress = "1.27.1"
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
@@ -11,21 +22,58 @@ spring-dependency-management = { id = "io.spring.dependency-management", version
 jib = { id = "com.google.cloud.tools.jib", version.ref = "jib" }
 
 [libraries]
+# Spring Boot
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "spring-boot" }
 spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "spring-boot" }
 spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "spring-boot" }
+spring-boot-starter-oauth2-resource-server = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server", version.ref = "spring-boot" }
 spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "spring-boot" }
 spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools", version.ref = "spring-boot" }
 spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose", version.ref = "spring-boot" }
+spring-boot-starter-mail = { group = "org.springframework.boot", name = "spring-boot-starter-mail", version.ref = "spring-boot" }
+spring-boot-starter-thymeleaf = { group = "org.springframework.boot", name = "spring-boot-starter-thymeleaf", version.ref = "spring-boot" }
 spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot" }
-spring-security-test = { group = "org.springframework.security", name = "spring-security-test", version = "6.2.3" }
 
-flyway-core = { group = "org.flywaydb", name = "flyway-core", version = "10.11.0" }
-flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version = "10.11.0" }
+# Database
+flyway-core = { group = "org.flywaydb", name = "flyway-core", version.ref = "flyway" }
+flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
+postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
 
-postgresql = { group = "org.postgresql", name = "postgresql", version = "42.7.2" }
-h2 = { group = "com.h2database", name = "h2", version = "2.2.224" }
-
+# Utilities
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
-jakarta-validation-api = { group = "jakarta.validation", name = "jakarta.validation-api", version = "3.1.1" }
-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.10.2" }
+jakarta-validation-api = { group = "jakarta.validation", name = "jakarta.validation-api", version.ref = "jakarta-validation" }
+jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
+jackson-annotations = { group = "com.fasterxml.jackson.core", name = "jackson-annotations", version.ref = "jackson" }
+jackson-core = { group = "com.fasterxml.jackson.core", name = "jackson-core", version.ref = "jackson" }
+commons-io = { group = "commons-io", name = "commons-io", version.ref = "commons-io" }
+commons-compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commons-compress" }
+
+# Keycloak
+keycloak-admin-client = { group = "org.keycloak", name = "keycloak-admin-client", version.ref = "keycloak" }
+testcontainers-keycloak = { group = "com.github.dasniko", name = "testcontainers-keycloak", version = "3.7.0" }  # Latest compatible with Keycloak 26.2.2
+
+# Test
+spring-security-test = { group = "org.springframework.security", name = "spring-security-test", version.ref = "spring-security" }
+junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
+junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit" }
+junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+testcontainers-junit-jupiter = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "testcontainers" }
+
+[bundles]
+spring-boot = [
+    "spring-boot-starter-web",
+    "spring-boot-starter-data-jpa",
+    "spring-boot-starter-security",
+    "spring-boot-starter-oauth2-resource-server",
+    "spring-boot-starter-actuator",
+    "spring-boot-devtools",
+    "spring-boot-docker-compose",
+    "spring-boot-starter-mail",
+    "spring-boot-starter-thymeleaf"
+]
+flyway = ["flyway-core", "flyway-postgresql"]
+junit = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine"]
+testcontainers = ["testcontainers-junit-jupiter", "testcontainers-keycloak"]
+jackson = ["jackson-databind", "jackson-annotations", "jackson-core"]

@@ -1,6 +1,11 @@
 spring:
   application:
     name: backend
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/auth_system
   datasource:
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -12,3 +17,23 @@ spring:
     enabled: true
     locations: classpath:db/migration
     baseline-on-migrate: true
+  docker:
+    compose:
+      profiles:
+        active: app
+  mail:
+    host: localhost
+    port: 1025
+    username: ''
+    password: ''
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+keycloak:
+  server-url: http://localhost:8081/
+  realm: auth_system
+  client-id: auth_service
+  client-secret: pYhRDW6hFch5SgWUoY3CIE8Xo8KPr1Jl

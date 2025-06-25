@@ -1,0 +1,26 @@
+<app-auth-layout>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <!-- Email or username Field -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Email or username</mat-label>
+      <input matInput formControlName="identifier" type="text" />
+    </mat-form-field>
+
+    <!-- Password Field -->
+    <mat-form-field appearance="outline" class="custom-field">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" />
+    </mat-form-field>
+
+    <div class="remember-forgot">
+      <button mat-button class="forgot-link" [routerLink]="'/forgot-password'">Forgot password?</button>
+    </div>
+
+    <section>
+      <button mat-flat-button [disabled]="!loginForm.valid" class="login-btn">Login</button>
+      <p>Not a member yet?</p>
+      <button mat-button class="create-account-btn" [routerLink]="'/register'">Sign up</button>
+    </section>
+  </form>
+</app-auth-layout>

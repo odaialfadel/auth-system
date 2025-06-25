@@ -1,6 +1,7 @@
-version: "3.8"
 services:
-  postgres:
+  # Auth-service database (app profile)
+  auth-db:
+    profiles: ["app"]
     image: postgres:16
     ports:
       - "5432:5432"
@@ -13,3 +14,63 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    networks:
+      - backend-net
+
+  # Keycloak database (keycloak profile)
+  keycloak-db:
+    profiles: ["keycloak"]
+    image: postgres:16
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - keycloak_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - keycloak-net
+
+  # Keycloak service (keycloak profile)
+  keycloak-service:
+    profiles: ["keycloak"]
+    image: quay.io/keycloak/keycloak:24.0.1
+    command: start-dev --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8081:8080"
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+    networks:
+      - keycloak-net
+
+  mailhog:
+    profiles: [ "app", "keycloak" ]
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+    networks:
+      - backend-net
+      - keycloak-net
+
+networks:
+  backend-net:
+  keycloak-net:
+
+volumes:
+  keycloak_data:
