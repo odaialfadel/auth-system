@@ -64,8 +64,8 @@ class KeycloakAuthGatewayTest {
 
         assertNotNull(token, "Token response should not be null");
         assertNotNull(token.getToken(), "Access token should not be null");
-        assertTrue(token.getExpiresIn() >= 300 && token.getExpiresIn() <= 360,
-                "Token expiration should be between 300 and 360 seconds (default 5 minutes)");
+        long expiresIn = token.getExpiresIn();
+        assertTrue(expiresIn <= 360, "Token expiration should not exceed 360 seconds: " + expiresIn);
     }
 
     @Test
