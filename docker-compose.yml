@@ -55,6 +55,8 @@ services:
     depends_on:
       keycloak-db:
         condition: service_healthy
+    volumes:
+      - ./keycloak-data:/opt/keycloak/data/import:ro
     networks:
       - keycloak-net
 
