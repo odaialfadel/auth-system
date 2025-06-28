@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class MailSenderImpl implements MailSender {
 
     private final JavaMailSender javaMailSender;

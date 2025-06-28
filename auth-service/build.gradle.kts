@@ -41,6 +41,7 @@ dependencies {
     testImplementation(libs.bundles.junit)
     testImplementation(libs.bundles.testcontainers)
     testImplementation(libs.h2)
+    testImplementation(libs.green.mail)
 }
 
 tasks.test {
