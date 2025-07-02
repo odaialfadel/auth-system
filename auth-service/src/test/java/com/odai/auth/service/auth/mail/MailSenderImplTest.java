@@ -1,4 +1,4 @@
-package com.odai.auth.service.mail;
+package com.odai.auth.service.auth.mail;
 
 
 import com.icegreen.greenmail.store.MailFolder;
@@ -6,7 +6,7 @@ import com.icegreen.greenmail.user.GreenMailUser;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import com.icegreen.greenmail.util.ServerSetupTest;
-import com.odai.auth.service.mail.model.EmailDetails;
+import com.odai.auth.service.auth.mail.model.EmailDetails;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.*;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
