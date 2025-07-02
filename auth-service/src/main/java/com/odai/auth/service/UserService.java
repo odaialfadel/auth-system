@@ -1,4 +1,4 @@
-package com.odai.auth.service.auth;
+package com.odai.auth.service;
 
 import com.odai.auth.shared.dto.registeration.UserRegistrationResponse;
 
