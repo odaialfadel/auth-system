@@ -32,7 +32,7 @@ public class EmailVerificationService {
                 mailProperties.getFrom(),
                 List.of(createdUser.getEmail()),
                 "Email Verification - " + mailProperties.getVerify().getServiceName(),
-                "templates/email/verify/verify-email.html",
+                "email/verify/verify-email",
                 Map.of("token", generatedToken.getToken())
         );
 

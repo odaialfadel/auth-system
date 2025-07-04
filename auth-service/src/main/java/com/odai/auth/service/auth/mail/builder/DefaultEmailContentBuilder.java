@@ -32,5 +32,4 @@ public class DefaultEmailContentBuilder {
 
         return templateEngine.process(mailTemplate, context);
     }
-
 }
