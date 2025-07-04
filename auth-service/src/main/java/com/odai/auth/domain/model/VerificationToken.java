@@ -10,6 +10,14 @@ import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
+/**
+ * Entity representing an email verification token.
+ * <p>
+ * This token is used to verify a user's email address during registration
+ * or other verification flows. Each token is associated with a user and has
+ * an expiration timestamp.
+ * </p>
+ */
 @Getter
 @Setter
 @AllArgsConstructor

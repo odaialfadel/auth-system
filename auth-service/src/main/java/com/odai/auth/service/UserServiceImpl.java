@@ -13,6 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+
+/**
+ * Implementation of {@link UserService} that manages user registration,
+ * retrieval, deactivation, and deletion by coordinating persistence with
+ * {@link UserRepository}, Keycloak operations through {@link KeycloakService},
+ * and email verification via {@link EmailVerificationService}.
+ */
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,6 +30,21 @@ public class UserServiceImpl implements UserService {
     private final KeycloakService keycloakService;
     private final EmailVerificationService emailVerificationService;
 
+    /**
+     * Registers a new user if the email does not already exist.
+     * <p>
+     * The user is created in Keycloak via {@link KeycloakService} and
+     * persisted locally in the database. A verification email is sent after registration.
+     * </p>
+     *
+     * @param username  the username chosen by the user
+     * @param firstName the user's first name
+     * @param lastName  the user's last name
+     * @param email     the user's email address
+     * @param password  the user's password
+     * @return a {@link UserRegistrationResponse} containing user details and a success message
+     * @throws UserAlreadyExistsException if a user with the given email already exists
+     */
     @Transactional
     @Override
     public UserRegistrationResponse registerNewUser(String username, String firstName, String lastName, String email, String password) {
@@ -49,6 +71,13 @@ public class UserServiceImpl implements UserService {
         return userRegistrationResponse;
     }
 
+    /**
+     * Retrieves a user by their Keycloak ID.
+     *
+     * @param keycloakId the Keycloak user ID
+     * @return a {@link UserRegistrationResponse} with the user's details and a success message
+     * @throws RuntimeException if the user is not found in the repository
+     */
     @Override
     public UserRegistrationResponse getUserByKeycloakId(UUID keycloakId) {
         User user = userRepository.findByKeycloakId(keycloakId)
@@ -57,6 +86,12 @@ public class UserServiceImpl implements UserService {
                 USER_FOUND);
     }
 
+    /**
+     * Deactivates a user account by setting its active flag to false.
+     *
+     * @param userId the database ID of the user to deactivate
+     * @throws RuntimeException if the user is not found
+     */
     @Override
     public void deactivateUser(Long userId) {
         User user = userRepository.findById(userId)
@@ -65,6 +100,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    /**
+     * Deletes a user both from the Keycloak server and the local repository.
+     *
+     * @param userId the database ID of the user to delete
+     * @throws UserNotFoundException if the user is not found in the repository
+     */
     @Override
     public void deleteUserById(Long userId) {
         User user = userRepository.findById(userId)

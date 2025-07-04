@@ -9,6 +9,13 @@ import lombok.NoArgsConstructor;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Data transfer object representing the details of an email message.
+ * <p>
+ * Contains sender and recipient information, subject, body content,
+ * and optional attachments.
+ * </p>
+ */
 @Data
 @Builder
 @NoArgsConstructor
