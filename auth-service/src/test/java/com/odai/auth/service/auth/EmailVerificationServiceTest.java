@@ -69,7 +69,7 @@ class EmailVerificationServiceTest {
         // Only set up needed mocks for this test
         String subject = "Email Verification - TestService";
         String content = "<h1>Verify your email</h1><p>Token: " + TOKEN + "</p>";
-        String template = "templates/email/verify/verify-email.html";
+        String template = "email/verify/verify-email";
 
         VerificationToken token = new VerificationToken();
         token.setToken(TOKEN);
