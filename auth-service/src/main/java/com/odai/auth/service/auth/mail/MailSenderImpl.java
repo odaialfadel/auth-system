@@ -1,6 +1,6 @@
-package com.odai.auth.service.mail;
+package com.odai.auth.service.auth.mail;
 
-import com.odai.auth.service.mail.model.EmailDetails;
+import com.odai.auth.service.auth.mail.model.EmailDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class MailSenderImpl implements MailSender {
 
     private final JavaMailSender javaMailSender;

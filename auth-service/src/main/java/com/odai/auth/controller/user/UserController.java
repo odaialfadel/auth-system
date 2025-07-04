@@ -1,6 +1,6 @@
 package com.odai.auth.controller.user;
 
-import com.odai.auth.service.auth.UserService;
+import com.odai.auth.service.UserService;
 import com.odai.auth.shared.dto.user.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

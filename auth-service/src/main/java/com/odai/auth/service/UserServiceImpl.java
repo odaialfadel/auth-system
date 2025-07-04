@@ -1,10 +1,11 @@
-package com.odai.auth.service.auth;
+package com.odai.auth.service;
 
 import com.odai.auth.exception.UserAlreadyExistsException;
 import com.odai.auth.exception.UserNotFoundException;
 import com.odai.auth.gateway.keycloak.KeycloakService;
 import com.odai.auth.domain.model.User;
 import com.odai.auth.domain.repository.UserRepository;
+import com.odai.auth.service.auth.EmailVerificationService;
 import com.odai.auth.shared.dto.registeration.UserRegistrationResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final KeycloakService keycloakService;
+    private final EmailVerificationService emailVerificationService;
 
     @Transactional
     @Override
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
         UUID keycloakId = UUID.fromString(keycloakService.RegisterNewUser(username, firstName, lastName, email, password));
 
-        User saveUser = userRepository.save(User.builder()
+        User savedUser = userRepository.save(User.builder()
                 .keycloakId(keycloakId)
                 .username(username)
                 .email(email)
@@ -38,9 +40,13 @@ public class UserServiceImpl implements UserService {
                 .lastName(lastName)
                 .build());
 
-        return new UserRegistrationResponse(
-                saveUser.getId(), saveUser.getKeycloakId(), saveUser.getUsername(), saveUser.getEmail(),
+        UserRegistrationResponse userRegistrationResponse = new UserRegistrationResponse(
+                savedUser.getId(), savedUser.getKeycloakId(), savedUser.getUsername(), savedUser.getEmail(),
                 REGISTRATION_SUCCESSFUL_PLEASE_VERIFY_YOUR_EMAIL);
+
+        emailVerificationService.sendVerificationMail(savedUser);
+
+        return userRegistrationResponse;
     }
 
     @Override

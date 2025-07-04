@@ -1,4 +1,4 @@
-package com.odai.auth.service.mail.model;
+package com.odai.auth.service.auth.mail.model;
 
 import jakarta.activation.DataSource;
 import lombok.AllArgsConstructor;

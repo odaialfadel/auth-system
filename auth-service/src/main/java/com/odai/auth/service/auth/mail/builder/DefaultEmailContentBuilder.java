@@ -1,6 +1,6 @@
-package com.odai.auth.service.mail.builder;
+package com.odai.auth.service.auth.mail.builder;
 
-import com.odai.auth.service.mail.model.EmailDetails;
+import com.odai.auth.service.auth.mail.model.EmailDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.ITemplateEngine;
@@ -32,5 +32,4 @@ public class DefaultEmailContentBuilder {
 
         return templateEngine.process(mailTemplate, context);
     }
-
 }

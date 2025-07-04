@@ -15,6 +15,8 @@ keycloak = "26.0.5"  # Updated to match KeycloakContainer version
 jackson = "2.19.0"
 commons-io = "2.19.0"  # For CVE-2024-23944 mitigation
 commons-compress = "1.27.1"
+green-mail = "2.1.3"
+mockito = "5.18.0"
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
@@ -60,6 +62,8 @@ junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", v
 junit-jupiter-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit" }
 junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
 testcontainers-junit-jupiter = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "testcontainers" }
+green-mail = {group = "com.icegreen", name = "greenmail-junit5", version.ref = "green-mail" }
+mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito"}
 
 [bundles]
 spring-boot = [
