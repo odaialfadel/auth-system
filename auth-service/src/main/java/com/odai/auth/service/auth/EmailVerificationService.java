@@ -12,6 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service responsible for sending email verification messages to newly created users.
+ * <p>
+ * This service generates a verification token for the user and sends an email
+ * containing the token using configured email content and mailing infrastructure.
+ * </p>
+ */
 @Service
 @AllArgsConstructor
 public class EmailVerificationService {
@@ -21,6 +28,15 @@ public class EmailVerificationService {
     private final DefaultEmailContentBuilder defaultEmailContentBuilder;
     private final CustomMailProperties mailProperties;
 
+    /**
+     * Sends a verification email to the specified user.
+     * <p>
+     * If the user has no email address, this method returns immediately without sending mail.
+     * Otherwise, it creates a verification token, builds the email content, and sends the email.
+     * </p>
+     *
+     * @param createdUser the user who just got created and needs email verification
+     */
     public void sendVerificationMail(User createdUser) {
         if (createdUser.getEmail() == null) {
             return;

@@ -9,12 +9,30 @@ import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.stereotype.Component;
 
+/**
+ * Gateway component for authenticating users against Keycloak using the Resource Owner Password Credentials grant type.
+ * <p>
+ * This class is responsible for obtaining an access token for a user by providing their credentials.
+ * </p>
+ *
+ * <p>
+ * Note: This flow requires that the client has the `Direct Access Grants` enabled in Keycloak.
+ * </p>
+ */
 @Slf4j
 @AllArgsConstructor
 @Component
 public class KeycloakAuthGateway {
     private final KeycloakProperties keycloakProperties;
 
+    /**
+     * Retrieves an access token from Keycloak using the provided user credentials.
+     *
+     * @param emailOrUsername the email or username of the user
+     * @param password the user's password
+     * @return {@link AccessTokenResponse} containing the access token and related metadata
+     * @throws RuntimeException if authentication fails or the token cannot be obtained
+     */
     public AccessTokenResponse getAccessToken(String emailOrUsername, String password) {
        try( Keycloak keycloak = KeycloakBuilder.builder()
                .serverUrl(keycloakProperties.getServerUrl())
