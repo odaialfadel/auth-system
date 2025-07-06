@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class KeycloakService {
+
     private final KeycloakAdminGateway keycloakAdminGateway;
     private final KeycloakAuthGateway  keycloakAuthGateway;
 
@@ -47,7 +48,7 @@ public class KeycloakService {
 
         String keycloakId = keycloakAdminGateway.createUser(user);
         try {
-            keycloakAdminGateway.assignToGroup(keycloakId, "standard-users");
+            keycloakAdminGateway.assignToGroup(keycloakId, KeycloakGroups.STANDARD_USERS.getGroupName());
         } catch (Exception e) {
             // Clean up Keycloak user if group assignment fails
             keycloakAdminGateway.deleteUser(keycloakId);
