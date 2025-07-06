@@ -1,5 +1,6 @@
 package com.odai.auth.gateway.keycloak;
 
+import com.odai.auth.exception.KeycloakGatewayException;
 import lombok.AllArgsConstructor;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -33,7 +34,7 @@ public class KeycloakService {
      * @param password  the user's initial password
      * @return the Keycloak ID of the newly created user
      */
-    public String RegisterNewUser(String username, String firstName, String lastName, String email, String password) {
+    public String registerNewUser(String username, String firstName, String lastName, String email, String password) {
         UserRepresentation user = new UserRepresentation();
         user.setUsername(username);
         user.setEmail(email);
@@ -41,16 +42,17 @@ public class KeycloakService {
         user.setLastName(lastName);
         user.setEnabled(true);
 
-        // Set required actions before login
-        List<String> requiredActions = List.of("VERIFY_EMAIL");
-        user.setRequiredActions(requiredActions);
-
         CredentialRepresentation credential = createPasswordCredentials(password);
         user.setCredentials(List.of(credential));
 
         String keycloakId = keycloakAdminGateway.createUser(user);
-        keycloakAdminGateway.assignToGroup(keycloakId, "standard-users");
-        keycloakAdminGateway.sendVerificationMail(keycloakId, requiredActions);
+        try {
+            keycloakAdminGateway.assignToGroup(keycloakId, "standard-users");
+        } catch (Exception e) {
+            // Clean up Keycloak user if group assignment fails
+            keycloakAdminGateway.deleteUser(keycloakId);
+            throw new KeycloakGatewayException("Failed to complete Keycloak user creation setup: ", e.getMessage(), e);
+        }
 
         return keycloakId;
     }
