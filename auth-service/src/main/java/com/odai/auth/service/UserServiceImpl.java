@@ -2,12 +2,14 @@ package com.odai.auth.service;
 
 import com.odai.auth.exception.UserAlreadyExistsException;
 import com.odai.auth.exception.UserNotFoundException;
+import com.odai.auth.exception.UserRegistrationException;
 import com.odai.auth.gateway.keycloak.KeycloakService;
 import com.odai.auth.domain.model.User;
 import com.odai.auth.domain.repository.UserRepository;
 import com.odai.auth.service.auth.EmailVerificationService;
 import com.odai.auth.shared.dto.registeration.UserRegistrationResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.UUID;
  * {@link UserRepository}, Keycloak operations through {@link KeycloakService},
  * and email verification via {@link EmailVerificationService}.
  */
+@Slf4j
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,8 +36,10 @@ public class UserServiceImpl implements UserService {
     /**
      * Registers a new user if the email does not already exist.
      * <p>
-     * The user is created in Keycloak via {@link KeycloakService} and
-     * persisted locally in the database. A verification email is sent after registration.
+     * This method creates a user in Keycloak via {@link KeycloakService} and persists the user locally in the database.
+     * A verification email is sent upon successful registration. The operation is wrapped in a transaction to ensure
+     * data consistency. If any step fails (e.g., Keycloak creation, database save, or email verification), the method
+     * performs a rollback by deleting the user from both Keycloak and the local database to prevent orphaned records.
      * </p>
      *
      * @param username  the username chosen by the user
@@ -44,31 +49,63 @@ public class UserServiceImpl implements UserService {
      * @param password  the user's password
      * @return a {@link UserRegistrationResponse} containing user details and a success message
      * @throws UserAlreadyExistsException if a user with the given email already exists
+     * @throws UserRegistrationException  if user creation fails in Keycloak, local database, or during email verification
      */
-    @Transactional
     @Override
+    @Transactional
     public UserRegistrationResponse registerNewUser(String username, String firstName, String lastName, String email, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new UserAlreadyExistsException(email);
         }
 
-        UUID keycloakId = UUID.fromString(keycloakService.RegisterNewUser(username, firstName, lastName, email, password));
+        String keycloakUserId = null;
+        User savedUser = null;
 
-        User savedUser = userRepository.save(User.builder()
-                .keycloakId(keycloakId)
-                .username(username)
-                .email(email)
-                .firstName(firstName)
-                .lastName(lastName)
-                .build());
+        try {
+            keycloakUserId = keycloakService.registerNewUser(username, firstName, lastName, email, password);
+            UUID keycloakId = UUID.fromString(keycloakUserId);
 
-        UserRegistrationResponse userRegistrationResponse = new UserRegistrationResponse(
-                savedUser.getId(), savedUser.getKeycloakId(), savedUser.getUsername(), savedUser.getEmail(),
-                REGISTRATION_SUCCESSFUL_PLEASE_VERIFY_YOUR_EMAIL);
+            savedUser = userRepository.save(User.builder()
+                    .keycloakId(keycloakId)
+                    .username(username)
+                    .email(email)
+                    .firstName(firstName)
+                    .lastName(lastName)
+                    .build());
+            log.debug("User saved in local database with ID: {} for email: {}", savedUser.getId(), email);
 
-        emailVerificationService.sendVerificationMail(savedUser);
+            emailVerificationService.sendVerificationMail(savedUser);
+            log.debug("Verification email sent for user with email: {}", email);
 
-        return userRegistrationResponse;
+            log.info("User registration completed successfully for email: {}", email);
+            return new UserRegistrationResponse(
+                    savedUser.getId(), savedUser.getKeycloakId(), savedUser.getUsername(), savedUser.getEmail(),
+                    REGISTRATION_SUCCESSFUL_PLEASE_VERIFY_YOUR_EMAIL);
+        } catch (Exception e) {
+            log.error("User registration failed for email: {}. Reason: {}", email, e.getMessage());
+            // Rollback: Clean up if any step fails
+            if (keycloakUserId != null) {
+                // Delete user from Keycloak if created
+                try {
+                    keycloakService.deleteUser(keycloakUserId);
+                    log.info("Rollback: Successfully deleted Keycloak user with ID: {} for email: {}", keycloakUserId, email);
+                } catch (Exception keycloakCleanupException) {
+                    log.error("Rollback: Failed to delete Keycloak user with ID: {} for email: {}. Error: {}",
+                            keycloakUserId, email, keycloakCleanupException.getMessage());
+                }
+            }
+            if (savedUser != null) {
+                // Delete user from local database if created
+                try {
+                    userRepository.delete(savedUser);
+                    log.info("User with ID {} deleted successfully.", savedUser.getId());
+                } catch (Exception dbCleanupException) {
+                    log.error("Rollback: Failed to delete local user with ID: {} for email: {}. Error: {}",
+                            savedUser.getId(), email, dbCleanupException.getMessage());
+                }
+            }
+            throw new UserRegistrationException("User registration failed for email: {}", email, e);
+        }
     }
 
     /**
