@@ -188,13 +188,15 @@ export class RegisterComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/login']).then(success => {
-        if (success) {
-          console.log('Navigate to login successfully!');
-        } else {
-          console.log('Navigate to login failed.');
-        }
-      });
+      if (navigateOnClose) {
+        this.router.navigate(['/api/auth/login']).then(success => {
+          if (success) {
+            console.log('Navigate to login successfully!');
+          } else {
+            console.log('Navigate to login failed.');
+          }
+        });
+      }
     });
   }
 }
