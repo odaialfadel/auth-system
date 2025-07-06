@@ -5,7 +5,6 @@
     <p>Already have an account? <a routerLink="/login">Log in</a></p>
   </section>
 
-
   <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
     <mat-form-field appearance="outline" class="custom-field" [class.has-error]="shouldShowError('username')">
       <mat-label>Username</mat-label>
@@ -68,8 +67,8 @@
     <section class="create-account-btn">
       <button mat-flat-button class="create-account-btn" [disabled]="!registerForm.valid">Create Account</button>
     </section>
-    <section class="divider">
 
+    <section class="divider">
       <span>Or register with</span>
     </section>
 
