@@ -2,12 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {MatError, MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from '@angular/material/button';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatIcon} from '@angular/material/icon';
 import {AuthLayoutComponent} from '../../shared/auth-layout/auth-layout.component';
 import {NgIf} from '@angular/common';
 import {RegisterService} from '../service/register.service';
+import { MatDialog } from '@angular/material/dialog';
+import {MessageDialogComponent} from '../../shared/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +34,10 @@ export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private registerService: RegisterService) {
+  constructor(private fb: FormBuilder,
+              private registerService: RegisterService,
+              private dialog: MatDialog,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -167,11 +172,27 @@ export class RegisterComponent implements OnInit {
       this.registerService.register(username, firstName, lastName, email, password).subscribe({
         next: (data) => {
           console.log('Registration success', data);
+          this.openDialog('Success', 'Account created successfully!', true);
         },
         error: (error) => {
           console.log('Registration error', error);
+          this.openDialog('Failed', 'Failed to create an account!', false);
         }
       })
     }
+  }
+
+  openDialog(title: string, message: string, navigateOnClose: boolean = false): void {
+    const dialogRef = this.dialog.open(MessageDialogComponent, {
+      data: { title, message }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      if (navigateOnClose) {
+        this.router.navigate(['/api/auth/login']).then(success => {
+          console.log(success ? 'Navigate to login successfully!' : 'Navigate to login failed.');
+        });
+      }
+    });
   }
 }
