@@ -2,6 +2,7 @@ package com.odai.auth.controller.auth;
 
 import com.odai.auth.gateway.keycloak.KeycloakAuthGateway;
 import com.odai.auth.shared.dto.login.LoginRequest;
+import com.odai.auth.shared.dto.login.LoginResponse;
 import lombok.AllArgsConstructor;
 import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,12 @@ public class LoginController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
             AccessTokenResponse token = keycloakAuthGateway.getAccessToken(request.emailOrUsername(), request.password());
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(new LoginResponse(
+                    token.getToken(),
+                    token.getExpiresIn(),
+                    token.getTokenType()));
         } catch (HttpClientErrorException e) {
-            return ResponseEntity.status(e.getStatusCode()).body("Invalid credentials: " + e.getResponseBodyAsString());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Login failed");
         }
