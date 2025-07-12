@@ -184,17 +184,13 @@ export class RegisterComponent implements OnInit {
 
   openDialog(title: string, message: string, navigateOnClose: boolean = false): void {
     const dialogRef = this.dialog.open(MessageDialogComponent, {
-      data: { title, message}
+      data: { title, message }
     });
 
     dialogRef.afterClosed().subscribe(() => {
       if (navigateOnClose) {
         this.router.navigate(['/api/auth/login']).then(success => {
-          if (success) {
-            console.log('Navigate to login successfully!');
-          } else {
-            console.log('Navigate to login failed.');
-          }
+          console.log(success ? 'Navigate to login successfully!' : 'Navigate to login failed.');
         });
       }
     });
