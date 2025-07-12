@@ -23,7 +23,7 @@ interface RegisterResponse {
   providedIn: 'root'
 })
 export class RegisterService {
-  private apiUrl = `${environment.apiUrl}/api/users`; // Use environment configuration
+  private apiUrl = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {}
 
